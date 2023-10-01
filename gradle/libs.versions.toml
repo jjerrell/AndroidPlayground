@@ -1,6 +1,17 @@
 [versions]
+activityCompose = "1.7.2"
 androidGradlePlugin = "8.1.2"
 androidKotlinPlugin = "1.9.10"
+
+espressoCore = "3.5.1"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+kotlinBOM = "1.8.0"
+composeBOM = "2023.09.02"
+
+coreKtx = "1.12.0"
+lifecycleRuntimeKtx = "2.6.2"
+navigationCompose = "2.7.3"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -8,7 +19,28 @@ android-library = { id = "com.android.library", version.ref = "androidGradlePlug
 android-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "androidKotlinPlugin" }
 
 [libraries]
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
+androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
+androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 
+jetbrains-kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlinBOM" }
+
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBOM" }
+androidx-compose-ui-ui = { module = "androidx.compose.ui:ui" }
+androidx-compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidx-compose-material-three = { module = "androidx.compose.material3:material3" }
+
+junit-test = { module = "junit:junit", version.ref = "junit" }
+junit-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+junit-compose-ui-test-tooling = { module = "androidx.compose.ui:ui-tooling" }
+junit-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 
 [bundles]
+androidx-ui = [ "androidx-activity-compose", "androidx-lifecycle-runtime-ktx", "androidx-lifecycle-viewmodel-compose", "androidx-navigation-compose" ]
+androidx-compose = [ "androidx-compose-ui-ui", "androidx-compose-ui-graphics", "androidx-compose-ui-tooling-preview", "androidx-compose-material-three" ]
 
