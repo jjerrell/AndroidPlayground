@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
-import dev.jjerrell.android.playground.ui.compose.LoggingPage
+import dev.jjerrell.android.playground.ui.compose.logging.basic.LoggingPage
 import dev.jjerrell.android.playground.ui.theme.AndroidPlaygroundTheme
 
 const val ACTIVITY_TAG = "MAIN_ACTIVITY"
