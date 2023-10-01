@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.android.kotlin)
+    alias(libs.plugins.diffplug.spotless)
 }
 
 android {
@@ -47,11 +48,11 @@ android {
 }
 
 dependencies {
-    def composeBOM = platform(libs.androidx.compose.bom)
+    def composeBOM = enforcedPlatform(libs.androidx.compose.bom)
 
     implementation libs.androidx.core.ktx
 
-    implementation platform(libs.jetbrains.kotlin.bom)
+    implementation enforcedPlatform(libs.jetbrains.kotlin.bom)
     implementation libs.bundles.androidx.ui
 
     implementation composeBOM
@@ -67,4 +68,23 @@ dependencies {
 
     debugImplementation libs.junit.compose.ui.test.tooling
     debugImplementation libs.junit.compose.ui.test.manifest
+}
+
+spotless {
+    format("misc") {
+        target("*.gradle", "*.md", ".gitignore")
+
+        trimTrailingWhitespace()
+        indentWithSpaces() // or spaces. Takes an integer argument if you don't like 4
+        endWithNewline()
+    }
+
+    kotlin {
+        prettier()
+        licenseHeader("/* (C)2023 Jacob Jerrell */")
+    }
+    kotlinGradle {
+        target("*.gradle.kts")
+        prettier()
+    }
 }
