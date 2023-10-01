@@ -48,6 +48,7 @@ android {
 
 dependencies {
     def composeBOM = platform(libs.androidx.compose.bom)
+
     implementation libs.androidx.core.ktx
 
     implementation platform(libs.jetbrains.kotlin.bom)
