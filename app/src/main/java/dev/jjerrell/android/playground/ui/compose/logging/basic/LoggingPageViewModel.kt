@@ -1,18 +1,19 @@
-package dev.jjerrell.android.playground.ui.compose
+package dev.jjerrell.android.playground.ui.compose.logging.basic
 
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-
-private const val VM_TAG = "LoggingPageVM"
+import dev.jjerrell.android.playground.ui.tagging.PlaygroundTag
 
 data class LoggingPageViewModelState(
     val data: String? = null,
     val exception: Throwable? = null
 ) {
     val isInitialized = data != null || exception != null
+    val isWarning = data != null && exception != null
+    val isError = data == null && exception != null
 }
 
 class LoggingPageViewModel : ViewModel() {
@@ -30,7 +31,7 @@ class LoggingPageViewModel : ViewModel() {
 
     init {
         Log.v(
-            VM_TAG,
+            PlaygroundTag.BasicLogger.ViewModel,
             "View model initialized"
         )
     }
@@ -75,12 +76,12 @@ class LoggingPageViewModel : ViewModel() {
             // Use the one-off overload which only is only available to `Log.w`.
             // The only difference with this third overload is that it will not accept a `msg` parameter
             Log.w(
-                VM_TAG,
+                PlaygroundTag.BasicLogger.ViewModel,
                 e
             )
             // Since this is treated as a warning, keep the current value if non-null. Otherwise,
             // set a default state:
-            LoggingPageViewModelState(state.data ?: "Default feature enabled")
+            LoggingPageViewModelState(data = state.data ?: "Default feature enabled", exception = e)
         }
     }
 
