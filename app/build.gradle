@@ -19,13 +19,6 @@ android {
             useSupportLibrary true
         }
     }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -33,11 +26,22 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
-    buildFeatures {
-        compose true
-    }
     composeOptions {
         kotlinCompilerExtensionVersion '1.5.3'
+    }
+    buildFeatures {
+        compose true
+        buildConfig true
+    }
+    buildTypes {
+        debug {
+//            buildConfigField "String", "URL_SEARCH", "\"https://dev-search.example.com\""
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            buildConfigField "String", "URL_SEARCH", "\"https://search.example.com\""
+        }
     }
     packagingOptions {
         resources {
@@ -56,6 +60,8 @@ dependencies {
 
     implementation composeBOM
     implementation libs.bundles.androidx.compose
+
+    implementation libs.timber
 
     testImplementation libs.junit.test
 
