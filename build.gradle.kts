@@ -3,5 +3,25 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.android.kotlin) apply false
-    alias(libs.plugins.diffplug.spotless) apply false
+    alias(libs.plugins.diffplug.spotless)
+}
+
+configure<com.diffplug.gradle.spotless.SpotlessExtension> {
+    format("misc") {
+        target("*.gradle", "*.md", ".gitignore")
+
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
+
+    kotlin {
+        target("**/*.kt")
+        ktfmt().kotlinlangStyle().configure { it.setRemoveUnusedImport(true) }
+        licenseHeader("/* (C) 2023 Jacob Jerrell */")
+    }
+    kotlinGradle {
+        target("*.gradle.kts")
+        ktfmt().kotlinlangStyle().configure { it.setRemoveUnusedImport(true) }
+    }
 }
