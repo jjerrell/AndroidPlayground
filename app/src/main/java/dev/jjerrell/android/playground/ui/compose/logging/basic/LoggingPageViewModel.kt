@@ -7,7 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import dev.jjerrell.android.playground.ui.tagging.PlaygroundTag
 import timber.log.Timber
 
 data class LoggingPageViewModelState(val data: String? = null, val exception: Throwable? = null) {
@@ -82,7 +81,7 @@ class LoggingPageViewModel : ViewModel() {
             } catch (e: Throwable) {
                 // Use the one-off overload which only is only available to `Log.w`. The only
                 // difference with this third overload is that it will not accept a `msg` parameter
-                Log.w(PlaygroundTag.BasicLogger.ViewModel, e)
+                logger.w(e)
                 // Since this is treated as a warning, keep the current value if non-null.
                 // Otherwise, set a default state:
                 LoggingPageViewModelState(

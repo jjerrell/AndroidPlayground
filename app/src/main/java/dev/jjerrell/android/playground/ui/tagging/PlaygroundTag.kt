@@ -4,9 +4,6 @@ package dev.jjerrell.android.playground.ui.tagging
 object PlaygroundTag {
     object BasicLogger {
 
-        const val Page = "LoggingPage"
-        const val ViewModel = "LoggingPageViewModel"
-
         object TestTag {
             private const val SUCCESS_BUTTON = "SUCCESSFUL"
             private const val FAILURE_BUTTON = "FAILURE"

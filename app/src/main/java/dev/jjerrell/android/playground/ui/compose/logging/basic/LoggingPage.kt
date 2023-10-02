@@ -25,15 +25,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.jjerrell.android.playground.ui.tagging.PlaygroundTag
 import java.lang.UnsupportedOperationException
 
+private const val PAGE_TAG = "LoggingPage"
+
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
 fun LoggingPage(modifier: Modifier = Modifier) {
     val viewModel: LoggingPageViewModel = viewModel()
     val testTags = remember { PlaygroundTag.BasicLogger.TestTag }
     // For instances like reporting screen views, use a LaunchedEffect with a constant as the key.
-    LaunchedEffect(Unit) {
-        viewModel.logger.v("Loading page with tag: ${PlaygroundTag.BasicLogger.Page}")
-    }
+    LaunchedEffect(Unit) { viewModel.logger.v("Loading page") }
 
     // Still using a launched effect since any executions like this would otherwise occur during
     // each recomposition event. Instead, this will only run once for every time viewModel.state
@@ -126,13 +126,7 @@ fun LoggingPage(modifier: Modifier = Modifier) {
             }
             Button(
                 modifier = Modifier.testTag(testTags.CustomLogLevelButton(1)),
-                onClick = {
-                    Log.println(
-                        Log.DEBUG,
-                        PlaygroundTag.BasicLogger.Page,
-                        "Low level logging button clicked!"
-                    )
-                }
+                onClick = { Log.println(Log.DEBUG, PAGE_TAG, "Low level logging button clicked!") }
             ) {
                 Text(text = "Low-level logging")
             }
