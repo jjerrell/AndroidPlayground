@@ -1,8 +1,8 @@
+/* (C) 2023 Jacob Jerrell */
 package dev.jjerrell.android.playground
 
-import org.junit.Test
-
 import org.junit.Assert.*
+import org.junit.Test
 
 /**
  * Example local unit test, which will execute on the development machine (host).

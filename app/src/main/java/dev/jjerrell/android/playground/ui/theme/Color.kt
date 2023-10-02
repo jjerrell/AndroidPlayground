@@ -1,3 +1,4 @@
+/* (C) 2023 Jacob Jerrell */
 package dev.jjerrell.android.playground.ui.theme
 
 import androidx.compose.ui.graphics.Color
