@@ -16,27 +16,22 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        vectorDrawables { useSupportLibrary = true }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
-    }
+    kotlinOptions { jvmTarget = "17" }
+    composeOptions { kotlinCompilerExtensionVersion = "1.5.3" }
     buildFeatures {
         compose = true
         buildConfig = true
     }
     buildTypes {
         debug {
-//            buildConfigField "String", "URL_SEARCH", "\"https://dev-search.example.com\""
+            //            buildConfigField "String", "URL_SEARCH",
+            // "\"https://dev-search.example.com\""
         }
         release {
             isMinifyEnabled = false
@@ -44,14 +39,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-//            buildConfigField "String", "URL_SEARCH", "\"https://search.example.com\""
+            //            buildConfigField "String", "URL_SEARCH", "\"https://search.example.com\""
         }
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+    packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
 }
 
 dependencies {
@@ -64,6 +55,8 @@ dependencies {
 
     implementation(composeBOM)
     implementation(libs.bundles.androidx.compose)
+
+    implementation(project(":base-android"))
 
     implementation(libs.timber)
 
