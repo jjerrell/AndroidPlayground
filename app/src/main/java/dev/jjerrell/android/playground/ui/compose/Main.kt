@@ -18,12 +18,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import dev.jjerrell.android.playground.base.android.navigation.BasePlaygroundNavigation
 import dev.jjerrell.android.playground.base.android.navigation.BottomNavScreen
+import dev.jjerrell.android.playground.ui.navigation.aboutNavigation
 import dev.jjerrell.android.playground.ui.navigation.demoNavigation
 
 @Composable
@@ -49,7 +49,7 @@ fun Main(modifier: Modifier = Modifier, navController: NavHostController) {
     Scaffold(
         modifier = modifier,
         topBar = {
-            if (!BottomNavScreen.pages.contains(currentNavScreen)) {
+            if (BottomNavScreen.pages.none { it.route == currentDestination?.route }) {
                 TopAppBar(
                     title = {
                         /**
@@ -78,14 +78,17 @@ fun Main(modifier: Modifier = Modifier, navController: NavHostController) {
                                 // Pop up to the start destination of the graph to
                                 // avoid building up a large stack of destinations
                                 // on the back stack as users select items
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
-                                }
+//                                val hierarchyStart = navController.graph.findStartDestination()
+//                                if (currentDestination?.route != hierarchyStart.route) {
+//                                    popUpTo(navController.graph.findStartDestination().id) {
+//                                        saveState = true
+//                                    }
+//                                }
                                 // Avoid multiple copies of the same destination when
                                 // reselecting the same item
-                                launchSingleTop = true
+//                                launchSingleTop = true
                                 // Restore state when reselecting a previously selected item
-                                restoreState = true
+//                                restoreState = true
                             }
                         }
                     )
@@ -99,6 +102,7 @@ fun Main(modifier: Modifier = Modifier, navController: NavHostController) {
             modifier = Modifier.padding(innerPadding)
         ) {
             demoNavigation()
+            aboutNavigation()
         }
     }
 }
