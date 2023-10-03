@@ -7,5 +7,5 @@ interface BasePlaygroundNavigation {
 }
 
 interface PlaygroundNavigationGroup : BasePlaygroundNavigation {
-    val startRoute: BasePlaygroundNavigation
+    val route: BasePlaygroundNavigation
 }
