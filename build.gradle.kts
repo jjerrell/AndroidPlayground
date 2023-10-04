@@ -7,6 +7,7 @@ plugins {
 }
 
 configure<com.diffplug.gradle.spotless.SpotlessExtension> {
+    ratchetFrom("origin/main")
     format("misc") {
         target("*.gradle", "*.md", ".gitignore")
 
@@ -21,7 +22,7 @@ configure<com.diffplug.gradle.spotless.SpotlessExtension> {
         licenseHeader("/* (C) 2023 Jacob Jerrell */")
     }
     kotlinGradle {
-        target("*.gradle.kts")
+        target("**/*.gradle.kts")
         ktfmt().kotlinlangStyle().configure { it.setRemoveUnusedImport(true) }
     }
 }
