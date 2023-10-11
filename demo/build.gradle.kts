@@ -1,22 +1,28 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.android.kotlin)
 }
 
 android {
-    namespace = "dev.jjerrell.android.playground"
-    compileSdk = 34
+    namespace = "dev.jjerrell.android.playground.logging.android"
+    compileSdk = 33
 
     defaultConfig {
-        applicationId = "dev.jjerrell.android.playground"
         minSdk = 29
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables { useSupportLibrary = true }
+        consumerProguardFiles("consumer-rules.pro")
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -24,44 +30,21 @@ android {
     }
     kotlinOptions { jvmTarget = "17" }
     composeOptions { kotlinCompilerExtensionVersion = "1.5.3" }
-    buildFeatures {
-        compose = true
-        buildConfig = true
-    }
-    buildTypes {
-        debug {
-            //            buildConfigField "String", "URL_SEARCH",
-            // "\"https://dev-search.example.com\""
-        }
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-            //            buildConfigField "String", "URL_SEARCH", "\"https://search.example.com\""
-        }
-    }
-    packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
+    buildFeatures { compose = true }
 }
 
 dependencies {
     val composeBOM = enforcedPlatform(libs.androidx.compose.bom)
+    val kotlinBOM = enforcedPlatform(libs.jetbrains.kotlin.bom)
+    implementation(composeBOM)
+    implementation(kotlinBOM)
 
     implementation(libs.androidx.core.ktx)
-
-    implementation(enforcedPlatform(libs.jetbrains.kotlin.bom))
     implementation(libs.bundles.androidx.ui)
-
-    implementation(composeBOM)
     implementation(libs.bundles.androidx.compose)
 
     implementation(project(":base-android"))
-    implementation(project(":demo"))
-
-    implementation(project(":feature-about"))
-
-    implementation(libs.timber)
+    implementation(project(":demo-logging-android"))
 
     testImplementation(libs.junit.test)
 
