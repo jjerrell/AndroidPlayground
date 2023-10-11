@@ -1,5 +1,5 @@
 /* (C) 2023 Jacob Jerrell */
-package dev.jjerrell.android.playground
+package dev.jjerrell.android.playground.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,8 +10,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.navigation.compose.rememberNavController
+import dev.jjerrell.android.playground.base.android.theme.AndroidPlaygroundTheme
 import dev.jjerrell.android.playground.ui.compose.Main
-import dev.jjerrell.android.playground.ui.theme.AndroidPlaygroundTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
 class MainActivity : ComponentActivity() {
