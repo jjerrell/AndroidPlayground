@@ -1,6 +1,7 @@
 /* (C) 2023 Jacob Jerrell */
 package dev.jjerrell.android.playground.demo.ui
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -15,12 +16,9 @@ import dev.jjerrell.android.playground.demo.navigation.DemoNavigationGroup
 
 @Composable
 fun DemoListPage(modifier: Modifier = Modifier, onRequestDemo: (BasePlaygroundNavigation) -> Unit) {
-    LazyVerticalGrid(modifier = modifier, columns = GridCells.Adaptive(156.dp)) {
+    LazyVerticalGrid(modifier = modifier.padding(8.dp), columns = GridCells.Adaptive(156.dp)) {
         items(DemoNavigationGroup.pages.filterNot { it is DemoNavigationGroup.Home }) {
-            when (it) {
-                DemoNavigationGroup.Home -> return@items
-                else -> Button(onClick = { onRequestDemo(it) }) { Text("Logging") }
-            }
+            Button(onClick = { onRequestDemo(it) }) { Text("Logging") }
         }
     }
 }

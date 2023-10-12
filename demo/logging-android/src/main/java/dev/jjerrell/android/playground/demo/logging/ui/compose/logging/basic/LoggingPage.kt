@@ -2,18 +2,21 @@
 package dev.jjerrell.android.playground.demo.logging.ui.compose.logging.basic
 
 import android.util.Log
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -26,11 +29,8 @@ import java.lang.UnsupportedOperationException
 private const val PAGE_TAG = "LoggingPage"
 
 @Composable
-@OptIn(ExperimentalFoundationApi::class)
-fun LoggingPage(
-    modifier: Modifier = Modifier,
-    //    onBackAction: () -> Unit
-    ) {
+@OptIn(ExperimentalMaterial3Api::class)
+fun LoggingPage(modifier: Modifier = Modifier, onBackAction: () -> Unit) {
     val viewModel: LoggingPageViewModel = viewModel()
     //    val BasicLoggingTag = remember { PlaygroundTag.BasicLogger.TestTag }
     // For instances like reporting screen views, use a LaunchedEffect with a constant as the key.
@@ -50,102 +50,110 @@ fun LoggingPage(
             viewModel.logger.v("No state received")
         }
     }
-
-    LazyColumn(modifier = modifier) {
-        stickyHeader {
-            Box(
-                modifier =
-                    Modifier.fillParentMaxWidth()
-                        .background(MaterialTheme.colorScheme.primaryContainer)
-                        .testTag(BasicLoggingTag.PageHeader)
-            ) {
+    Column(modifier = modifier.fillMaxSize()) {
+        TopAppBar(
+            title = {
                 Text(
                     modifier = Modifier.padding(vertical = 12.dp, horizontal = 8.dp),
                     text = "Data result: ${viewModel.state.data}"
                 )
-            }
-        }
-        items(items = viewModel.buttonType.keys.toList()) { buttonName: String ->
-            val loggingLevel = viewModel.buttonType[buttonName] ?: Log.INFO
-            Column(
-                modifier =
-                    Modifier.testTag(BasicLoggingTag.LogLevelHeader(buttonName))
-                        .padding(horizontal = 12.dp, vertical = 8.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text("$buttonName - Priority number: $loggingLevel")
-                Divider()
-            }
-            // Any of these buttons will trigger a minimum of two log events:
-            //   1. The result of updating the state via the vm method because of the
-            //      `LaunchedEffect(viewModel.state)` block above the UI code
-            //   2. The explicit `onLogEvent` call in the Buttons `onClick` block
-            //   3. "Warn" button only. When a failed call is still handled by setting a default
-            //      `data` value
-            Button(
-                modifier = Modifier.testTag(BasicLoggingTag.LogLevelButton(loggingLevel, true)),
-                onClick = {
-                    viewModel.getNetworkData()
-                    viewModel.logger.log(priority = loggingLevel, "$buttonName Button Clicked!")
+            },
+            navigationIcon = {
+                IconButton(onClick = onBackAction) {
+                    Image(Icons.Filled.ArrowBack, contentDescription = null)
                 }
-            ) {
-                Text(text = "$buttonName message")
             }
-            Button(
-                modifier = Modifier.testTag(BasicLoggingTag.LogLevelButton(loggingLevel, false)),
-                onClick = {
-                    viewModel.getNetworkDataWithoutSupport()
-                    viewModel.logger.log(loggingLevel, "$buttonName Exception Button Clicked!")
+        )
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(items = viewModel.buttonType.keys.toList()) { buttonName: String ->
+                val loggingLevel = viewModel.buttonType[buttonName] ?: Log.INFO
+                Column(
+                    modifier =
+                        Modifier.testTag(BasicLoggingTag.LogLevelHeader(buttonName))
+                            .padding(horizontal = 12.dp, vertical = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text("$buttonName - Priority number: $loggingLevel")
+                    Divider()
                 }
-            ) {
-                Text(text = "$buttonName exception")
-            }
-            // Log.WARN is the only level which contains an overload lacking a `msg` parameter
-            if (loggingLevel == Log.WARN) {
+                // Any of these buttons will trigger a minimum of two log events:
+                //   1. The result of updating the state via the vm method because of the
+                //      `LaunchedEffect(viewModel.state)` block above the UI code
+                //   2. The explicit `onLogEvent` call in the Buttons `onClick` block
+                //   3. "Warn" button only. When a failed call is still handled by setting a default
+                //      `data` value
                 Button(
-                    modifier = Modifier.testTag(BasicLoggingTag.LogLevelButton(loggingLevel, null)),
+                    modifier = Modifier.testTag(BasicLoggingTag.LogLevelButton(loggingLevel, true)),
                     onClick = {
-                        viewModel.getNetworkDataWithExplicitLogging()
+                        viewModel.getNetworkData()
+                        viewModel.logger.log(priority = loggingLevel, "$buttonName Button Clicked!")
+                    }
+                ) {
+                    Text(text = "$buttonName message")
+                }
+                Button(
+                    modifier =
+                        Modifier.testTag(BasicLoggingTag.LogLevelButton(loggingLevel, false)),
+                    onClick = {
+                        viewModel.getNetworkDataWithoutSupport()
                         viewModel.logger.log(loggingLevel, "$buttonName Exception Button Clicked!")
                     }
                 ) {
-                    Text(text = "$buttonName - extra overload ")
+                    Text(text = "$buttonName exception")
+                }
+                // Log.WARN is the only level which contains an overload lacking a `msg` parameter
+                if (loggingLevel == Log.WARN) {
+                    Button(
+                        modifier =
+                            Modifier.testTag(BasicLoggingTag.LogLevelButton(loggingLevel, null)),
+                        onClick = {
+                            viewModel.getNetworkDataWithExplicitLogging()
+                            viewModel.logger.log(
+                                loggingLevel,
+                                "$buttonName Exception Button Clicked!"
+                            )
+                        }
+                    ) {
+                        Text(text = "$buttonName - extra overload ")
+                    }
                 }
             }
-        }
-        item {
-            Column(
-                modifier =
-                    Modifier.testTag(BasicLoggingTag.LogLevelHeader("CUSTOM"))
-                        .padding(horizontal = 12.dp, vertical = 8.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text("Low-level Logging")
-                Divider()
-            }
-            Button(
-                modifier = Modifier.testTag(BasicLoggingTag.CustomLogLevelButton(1)),
-                onClick = { Log.println(Log.DEBUG, PAGE_TAG, "Low level logging button clicked!") }
-            ) {
-                Text(text = "Low-level logging")
-            }
-            Button(
-                modifier = Modifier.testTag(BasicLoggingTag.CustomLogLevelButton(2)),
-                onClick = {
-                    /**
-                     * Retrieves the stack trace string for custom use.
-                     *
-                     * Note that [Throwable.stackTraceToString] is also available
-                     */
-                    val stackTraceString =
-                        Log.getStackTraceString(UnsupportedOperationException("Example Error"))
-                    // Level is defaulted to Log.INFO
-                    print("STDOUT: $stackTraceString")
+            item {
+                Column(
+                    modifier =
+                        Modifier.testTag(BasicLoggingTag.LogLevelHeader("CUSTOM"))
+                            .padding(horizontal = 12.dp, vertical = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text("Low-level Logging")
+                    Divider()
                 }
-            ) {
-                Text("Stdout logging")
+                Button(
+                    modifier = Modifier.testTag(BasicLoggingTag.CustomLogLevelButton(1)),
+                    onClick = {
+                        Log.println(Log.DEBUG, PAGE_TAG, "Low level logging button clicked!")
+                    }
+                ) {
+                    Text(text = "Low-level logging")
+                }
+                Button(
+                    modifier = Modifier.testTag(BasicLoggingTag.CustomLogLevelButton(2)),
+                    onClick = {
+                        /**
+                         * Retrieves the stack trace string for custom use.
+                         *
+                         * Note that [Throwable.stackTraceToString] is also available
+                         */
+                        val stackTraceString =
+                            Log.getStackTraceString(UnsupportedOperationException("Example Error"))
+                        // Level is defaulted to Log.INFO
+                        print("STDOUT: $stackTraceString")
+                    }
+                ) {
+                    Text("Stdout logging")
+                }
             }
         }
     }
