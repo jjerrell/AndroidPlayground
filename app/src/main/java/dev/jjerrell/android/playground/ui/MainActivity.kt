@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
-import androidx.navigation.compose.rememberNavController
+import dev.jjerrell.android.playground.base.android.navigation.compose.rememberPlaygroundController
 import dev.jjerrell.android.playground.base.android.theme.AndroidPlaygroundTheme
 import dev.jjerrell.android.playground.ui.compose.Main
 
@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val navHostController = rememberNavController()
+            val navHostController = rememberPlaygroundController()
             AndroidPlaygroundTheme {
                 Main(
                     modifier =

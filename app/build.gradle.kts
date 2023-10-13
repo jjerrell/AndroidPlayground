@@ -55,6 +55,7 @@ dependencies {
 
     implementation(composeBOM)
     implementation(libs.bundles.androidx.compose)
+    implementation(libs.androidx.navigation.compose)
 
     implementation(project(":base-android"))
     implementation(project(":demo"))

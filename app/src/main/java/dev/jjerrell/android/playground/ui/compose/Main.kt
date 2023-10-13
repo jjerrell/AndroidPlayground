@@ -20,17 +20,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
+import dev.jjerrell.android.playground.base.android.navigation.BasePlaygroundNavigation
 import dev.jjerrell.android.playground.base.android.navigation.BottomNavScreen
+import dev.jjerrell.android.playground.base.android.navigation.PlaygroundController
+import dev.jjerrell.android.playground.base.android.navigation.composable
+import dev.jjerrell.android.playground.base.android.navigation.compose.currentBackStackEntryAsState
 import dev.jjerrell.android.playground.demo.navigation.demoNavigation
 import dev.jjerrell.android.playground.feature.about.navigation.aboutNavigation
 import kotlinx.coroutines.delay
 
 @Composable
-fun Main(modifier: Modifier = Modifier, navController: NavHostController) {
+fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination by remember { derivedStateOf { navBackStackEntry?.destination } }
     val onBackAction: () -> Unit = { navController.popBackStack() }
@@ -68,7 +69,7 @@ fun Main(modifier: Modifier = Modifier, navController: NavHostController) {
             startDestination = "start",
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable("start") {
+            composable(LandingStart) {
                 LaunchedEffect(Unit) {
                     delay(500L)
                     onLocalNavigation(BottomNavScreen.Home.route)
@@ -85,4 +86,12 @@ fun Main(modifier: Modifier = Modifier, navController: NavHostController) {
             aboutNavigation()
         }
     }
+}
+
+private object LandingStart : BasePlaygroundNavigation {
+    override val path: String
+        get() = "start"
+    override val deepLinks: List<String>?
+        get() = null
+
 }
