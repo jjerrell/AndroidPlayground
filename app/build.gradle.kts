@@ -57,6 +57,9 @@ dependencies {
     implementation(libs.bundles.androidx.compose)
 
     implementation(project(":base-android"))
+    implementation(project(":demo"))
+
+    implementation(project(":feature-about"))
 
     implementation(libs.timber)
 

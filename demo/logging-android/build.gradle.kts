@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.jjerrell.android.playground.base.android"
+    namespace = "dev.jjerrell.android.playground.logging.android"
     compileSdk = 34
 
     defaultConfig {
@@ -16,7 +16,6 @@ android {
     }
 
     buildTypes {
-        debug {}
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -45,6 +44,8 @@ dependencies {
     implementation(libs.bundles.androidx.compose)
 
     implementation(libs.timber)
+
+    implementation(project(":base-android"))
 
     testImplementation(libs.junit.test)
 

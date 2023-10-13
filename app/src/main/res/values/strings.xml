@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AndroidPlayground</string>
+    <string name="accessibility_button_back">Back</string>
 </resources>
