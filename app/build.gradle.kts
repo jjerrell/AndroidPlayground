@@ -57,6 +57,9 @@ dependencies {
     implementation(libs.bundles.androidx.compose)
     implementation(libs.androidx.navigation.compose)
 
+    implementation(enforcedPlatform(libs.koin.bom))
+    implementation(libs.bundles.koin.androidx.ui)
+
     implementation(project(":base-android"))
     implementation(project(":demo"))
 

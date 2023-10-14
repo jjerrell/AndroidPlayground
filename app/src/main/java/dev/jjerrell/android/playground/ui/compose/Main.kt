@@ -19,13 +19,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import dev.jjerrell.android.playground.base.android.navigation.BasePlaygroundNavigation
 import dev.jjerrell.android.playground.base.android.navigation.BottomNavScreen
 import dev.jjerrell.android.playground.base.android.navigation.PlaygroundController
 import dev.jjerrell.android.playground.base.android.navigation.composable
-import dev.jjerrell.android.playground.base.android.navigation.compose.currentBackStackEntryAsState
 import dev.jjerrell.android.playground.demo.navigation.demoNavigation
 import dev.jjerrell.android.playground.feature.about.navigation.aboutNavigation
 import kotlinx.coroutines.delay
@@ -35,13 +33,15 @@ fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination by remember { derivedStateOf { navBackStackEntry?.destination } }
     val onBackAction: () -> Unit = { navController.popBackStack() }
-    val onLocalNavigation: (path: String) -> Unit = { path -> navController.navigate(path) }
-    val onModularNavigation: (route: String) -> Unit = { route ->
+    val onLocalNavigation: (path: BasePlaygroundNavigation) -> Unit = { path ->
+        navController.navigate(path)
+    }
+    val onModularNavigation: (route: BasePlaygroundNavigation) -> Unit = { route ->
         navController.navigate(route) {
             // Pop up to the start destination of the graph to
             // avoid building up a large stack of destinations
             // on the back stack as users select items
-            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+            popUpTo(navController.findStartDestination().id) { saveState = true }
             // Avoid multiple copies of the same destination when
             // reselecting the same item
             launchSingleTop = true
@@ -58,21 +58,21 @@ fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
                         icon = { Icon(screen.icon, contentDescription = null) },
                         label = { Text(stringResource(screen.resourceName)) },
                         selected = currentDestination?.let { it.route == screen.route } == true,
-                        onClick = { onModularNavigation(screen.route) }
+                        onClick = { onModularNavigation(screen) }
                     )
                 }
             }
         }
     ) { innerPadding ->
         NavHost(
-            navController = navController,
+            navController = navController.hostController,
             startDestination = "start",
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(LandingStart) {
                 LaunchedEffect(Unit) {
                     delay(500L)
-                    onLocalNavigation(BottomNavScreen.Home.route)
+                    onLocalNavigation(BottomNavScreen.Home)
                 }
                 Column(
                     modifier = Modifier.fillMaxSize(),
@@ -91,7 +91,7 @@ fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
 private object LandingStart : BasePlaygroundNavigation {
     override val path: String
         get() = "start"
+
     override val deepLinks: List<String>?
         get() = null
-
 }
