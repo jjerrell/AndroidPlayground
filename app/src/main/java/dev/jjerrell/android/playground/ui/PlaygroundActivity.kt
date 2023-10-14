@@ -7,21 +7,33 @@ import androidx.activity.compose.setContent
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.SemanticsPropertyReceiver
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
+import dev.jjerrell.android.playground.base.android.navigation.PlaygroundController
 import dev.jjerrell.android.playground.base.android.navigation.compose.rememberPlaygroundController
 import dev.jjerrell.android.playground.base.android.theme.AndroidPlaygroundTheme
 import dev.jjerrell.android.playground.ui.compose.Main
 import org.koin.android.ext.android.getKoin
 import org.koin.compose.KoinContext
 
+/**
+ * Playground activity serves as the main entry point for the application user interface.
+ *
+ * Configures:
+ * - Compose Koin context
+ * - The [PlaygroundController]
+ * - The compose application theme
+ * - The [Main] composable
+ * - Sets [SemanticsPropertyReceiver.testTagsAsResourceId] for automation purposes
+ */
 @OptIn(ExperimentalComposeUiApi::class)
-class MainActivity : ComponentActivity() {
+class PlaygroundActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             KoinContext(application.getKoin()) {
-                val navHostController = rememberPlaygroundController()
+                val navHostController: PlaygroundController = rememberPlaygroundController()
                 AndroidPlaygroundTheme {
                     Main(
                         modifier =
