@@ -13,11 +13,11 @@ import dev.jjerrell.android.playground.logging.android.R
 
 fun NavGraphBuilder.demoNavigation(
     onBackAction: () -> Unit,
-    onNavigationAction: (route: String) -> Unit
+    onNavigationAction: (route: BasePlaygroundNavigation) -> Unit
 ) {
     navigation(DemoNavigationGroup) {
         composable(navRoute = DemoNavigationGroup.Home) {
-            DemoListPage(onRequestDemo = { demoNavItem -> onNavigationAction(demoNavItem.path) })
+            DemoListPage(onRequestDemo = { demoNavItem -> onNavigationAction(demoNavItem) })
         }
         composable(navRoute = DemoNavigationGroup.Logging) {
             LoggingPage(onBackAction = onBackAction)
@@ -26,8 +26,7 @@ fun NavGraphBuilder.demoNavigation(
 }
 
 internal interface DemoNavigationItem : BasePlaygroundNavigation {
-    @get:StringRes
-    val pageTitleRes: Int
+    @get:StringRes val pageTitleRes: Int
 }
 
 data object DemoNavigationGroup : PlaygroundNavigationGroup {
@@ -44,8 +43,7 @@ data object DemoNavigationGroup : PlaygroundNavigationGroup {
     }
 
     data object Logging : DemoNavigationItem {
-        @StringRes
-        override val pageTitleRes: Int = R.string.demo_logging_title
+        @StringRes override val pageTitleRes: Int = R.string.demo_logging_title
         override val path: String = "logging"
 
         override val deepLinks: List<String>?

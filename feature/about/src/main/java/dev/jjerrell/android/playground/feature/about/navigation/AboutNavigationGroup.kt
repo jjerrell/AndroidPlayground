@@ -10,6 +10,7 @@ import dev.jjerrell.android.playground.base.android.navigation.PlaygroundNavigat
 import dev.jjerrell.android.playground.base.android.navigation.composable
 import dev.jjerrell.android.playground.base.android.navigation.navigation
 import dev.jjerrell.android.playground.feature.about.ui.compose.AboutPage
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(
     ExperimentalFoundationApi::class,
@@ -17,7 +18,9 @@ import dev.jjerrell.android.playground.feature.about.ui.compose.AboutPage
     ExperimentalMaterial3Api::class
 )
 fun NavGraphBuilder.aboutNavigation() {
-    navigation(AboutNavigationGroup) { composable(AboutNavigationGroup.Home) { AboutPage() } }
+    navigation(AboutNavigationGroup) {
+        composable(AboutNavigationGroup.Home) { AboutPage(viewModel = koinViewModel()) }
+    }
 }
 
 data object AboutNavigationGroup : PlaygroundNavigationGroup {

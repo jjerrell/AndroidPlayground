@@ -12,7 +12,13 @@ sealed class BottomNavScreen(
     val route: String,
     @StringRes val resourceName: Int,
     val icon: ImageVector
-) {
+) : BasePlaygroundNavigation {
+    override val path: String
+        get() = this.route
+
+    override val deepLinks: List<String>?
+        get() = null
+
     data object Home : BottomNavScreen("demo", R.string.navigation_demo, icon = Icons.Filled.Home)
 
     data object About :

@@ -18,13 +18,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.jjerrell.android.playground.feature.about.Contributors
 
 @Composable
 @ExperimentalFoundationApi
 @ExperimentalLayoutApi
 @ExperimentalMaterial3Api
-internal fun AboutPage() {
+internal fun AboutPage(viewModel: AboutViewModel) {
     Column(modifier = Modifier.fillMaxSize()) {
         TopAppBar(title = { Text("About") })
         LazyColumn(
@@ -37,11 +36,25 @@ internal fun AboutPage() {
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
+            item {
+                Text(
+                    "The application and this page specifically is a demonstration of a simple dependency injection configuration using Koin!",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
             stickyHeader {
                 Text("Contributors", style = MaterialTheme.typography.bodyLarge)
                 Divider()
             }
-            item { FlowRow { Contributors.values().forEach { Card { Text("@${it.username}") } } } }
+            viewModel.state.contributors?.let { contributors ->
+                item {
+                    FlowRow {
+                        contributors.forEach {
+                            Card { Text("@${it.username}", modifier = Modifier.padding(4.dp)) }
+                        }
+                    }
+                }
+            }
         }
     }
 }
