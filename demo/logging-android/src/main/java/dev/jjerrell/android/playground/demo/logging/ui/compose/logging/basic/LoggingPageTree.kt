@@ -5,6 +5,10 @@ import android.annotation.SuppressLint
 import android.util.Log
 import timber.log.Timber
 
+/**
+ * Implementation of [Timber.Tree] which bypasses any restrictions of the applications main Tree by
+ * logging directly via [Log] methods.
+ */
 @SuppressLint("LogNotTimber")
 internal class LoggingPageTree : Timber.Tree() {
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
