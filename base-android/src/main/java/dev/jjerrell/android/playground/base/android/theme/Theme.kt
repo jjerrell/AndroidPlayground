@@ -49,9 +49,7 @@ fun AndroidPlaygroundTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    /**
-     * Use dynamic color if enabled and available. Otherwise, respect system night/day mode.
-     */
+    /** Use dynamic color if enabled and available. Otherwise, respect system night/day mode. */
     val colorScheme =
         when {
             dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
@@ -62,13 +60,9 @@ fun AndroidPlaygroundTheme(
             else -> LightColorScheme
         }
 
-    /**
-     * Capture a reference to the parent CompositionLocal container
-     */
+    /** Capture a reference to the parent CompositionLocal container */
     val view = LocalView.current
-    /**
-     * Set the system status bar and inset colors unless the view is in Edit Mode
-     */
+    /** Set the system status bar and inset colors unless the view is in Edit Mode */
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
@@ -77,8 +71,6 @@ fun AndroidPlaygroundTheme(
         }
     }
 
-    /**
-     * Apply the colorscheme, typography, and content
-     */
+    /** Apply the colorscheme, typography, and content */
     MaterialTheme(colorScheme = colorScheme, typography = Typography, content = content)
 }

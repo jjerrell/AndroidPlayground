@@ -9,7 +9,8 @@ import androidx.navigation.compose.rememberNavController
 import dev.jjerrell.android.playground.base.android.navigation.PlaygroundController
 
 /**
- * Creates a [PlaygroundController] containing a reference to [NavHostController] and providing a space for custom navigation and state control logic
+ * Creates a [PlaygroundController] containing a reference to [NavHostController] and providing a
+ * space for custom navigation and state control logic
  *
  * @see NavHostController
  * @see rememberNavController

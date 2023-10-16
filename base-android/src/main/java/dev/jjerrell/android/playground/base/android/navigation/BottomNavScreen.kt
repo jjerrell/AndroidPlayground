@@ -26,21 +26,15 @@ sealed class BottomNavScreen(
     override val deepLinks: List<String>?
         get() = null
 
-    /**
-     * Home feature navigation hierarchy
-     */
+    /** Home feature navigation hierarchy */
     data object Home : BottomNavScreen("demo", R.string.navigation_demo, icon = Icons.Filled.Home)
 
-    /**
-     * Navigation hierarchy for feature-about
-     */
+    /** Navigation hierarchy for feature-about */
     data object About :
         BottomNavScreen("about", R.string.navigation_about, icon = Icons.Filled.Person)
 
     companion object {
-        /**
-         * All of the items in this collection as a list
-         */
+        /** All of the items in this collection as a list */
         val pages: List<BottomNavScreen> = listOf(Home, About)
     }
 }

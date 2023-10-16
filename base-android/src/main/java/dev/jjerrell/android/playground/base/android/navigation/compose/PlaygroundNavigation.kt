@@ -1,3 +1,4 @@
+/* (C) 2023 Jacob Jerrell */
 package dev.jjerrell.android.playground.base.android.navigation.compose
 
 import androidx.compose.animation.AnimatedContentScope

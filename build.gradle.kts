@@ -12,7 +12,6 @@ subprojects {
 
     // configure all format tasks at once
     tasks.withType<org.jetbrains.dokka.gradle.DokkaTaskPartial>().configureEach {
-
         moduleName.set(project.name)
         moduleVersion.set(project.version.toString())
         failOnWarning.set(false)

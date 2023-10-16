@@ -7,9 +7,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-/**
- * Set of Material typography styles for the application
- */
+/** Set of Material typography styles for the application */
 internal val Typography =
     Typography(
         bodyLarge = PlaygroundTypography.LargeBody
@@ -31,18 +29,15 @@ internal val Typography =
         */
     )
 
-/**
- * Container for Playground typography styles
- */
+/** Container for Playground typography styles */
 object PlaygroundTypography {
-    /**
-     * Definition for [Typography.bodyLarge]
-     */
-    internal val LargeBody = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    )
+    /** Definition for [Typography.bodyLarge] */
+    internal val LargeBody =
+        TextStyle(
+            fontFamily = FontFamily.Default,
+            fontWeight = FontWeight.Normal,
+            fontSize = 16.sp,
+            lineHeight = 24.sp,
+            letterSpacing = 0.5.sp
+        )
 }
