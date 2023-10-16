@@ -36,13 +36,22 @@ private val LightColorScheme =
         */
     )
 
+/**
+ * Android playground composable theme wrapper. Uses dynamic color if supported and configured.
+ *
+ * @param darkTheme Whether the system is in night mode or not
+ * @param dynamicColor Dynamic color is available on Android 12+. Defaults to enabled if supported
+ * @param content the composable content which implicitly inherits the theme through [LocalContext]
+ */
 @Composable
 fun AndroidPlaygroundTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
+    /**
+     * Use dynamic color if enabled and available. Otherwise, respect system night/day mode.
+     */
     val colorScheme =
         when {
             dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
@@ -52,7 +61,14 @@ fun AndroidPlaygroundTheme(
             darkTheme -> DarkColorScheme
             else -> LightColorScheme
         }
+
+    /**
+     * Capture a reference to the parent CompositionLocal container
+     */
     val view = LocalView.current
+    /**
+     * Set the system status bar and inset colors unless the view is in Edit Mode
+     */
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
@@ -61,5 +77,8 @@ fun AndroidPlaygroundTheme(
         }
     }
 
+    /**
+     * Apply the colorscheme, typography, and content
+     */
     MaterialTheme(colorScheme = colorScheme, typography = Typography, content = content)
 }

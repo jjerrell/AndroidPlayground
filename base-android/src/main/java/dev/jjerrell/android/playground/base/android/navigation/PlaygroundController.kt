@@ -9,7 +9,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.currentBackStackEntryAsState
 
-class PlaygroundController(val hostController: NavHostController) {
+/**
+ * Playground controller
+ *
+ * @property hostController
+ * @constructor Create empty Playground controller
+ */
+class PlaygroundController(
+    val hostController: NavHostController
+) {
     @Composable
     fun currentBackStackEntryAsState(): State<NavBackStackEntry?> =
         hostController.currentBackStackEntryAsState()
