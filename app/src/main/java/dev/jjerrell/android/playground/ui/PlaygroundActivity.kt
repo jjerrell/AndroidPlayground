@@ -17,18 +17,19 @@ import dev.jjerrell.android.playground.ui.compose.Main
 import org.koin.android.ext.android.getKoin
 import org.koin.compose.KoinContext
 
-/**
- * Playground activity serves as the main entry point for the application user interface.
- *
- * Configures:
- * - Compose Koin context
- * - The [PlaygroundController]
- * - The compose application theme
- * - The [Main] composable
- * - Sets [SemanticsPropertyReceiver.testTagsAsResourceId] for automation purposes
- */
+/** Playground activity serves as the main entry point for the application user interface. */
 @OptIn(ExperimentalComposeUiApi::class)
 class PlaygroundActivity : ComponentActivity() {
+    /**
+     * Configures:
+     * - Compose context via [setContent]
+     * - [KoinContext]
+     * - NavHostController [PlaygroundController]
+     * - The [Main] composable wrapping the navigation hierarchy
+     * - Sets [SemanticsPropertyReceiver.testTagsAsResourceId] for automation purposes
+     *
+     * @param savedInstanceState
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
