@@ -23,7 +23,7 @@ import androidx.navigation.compose.NavHost
 import dev.jjerrell.android.playground.base.android.navigation.BasePlaygroundNavigation
 import dev.jjerrell.android.playground.base.android.navigation.BottomNavScreen
 import dev.jjerrell.android.playground.base.android.navigation.PlaygroundController
-import dev.jjerrell.android.playground.base.android.navigation.composable
+import dev.jjerrell.android.playground.base.android.navigation.compose.composable
 import dev.jjerrell.android.playground.demo.navigation.demoNavigation
 import dev.jjerrell.android.playground.feature.about.navigation.aboutNavigation
 import kotlinx.coroutines.delay

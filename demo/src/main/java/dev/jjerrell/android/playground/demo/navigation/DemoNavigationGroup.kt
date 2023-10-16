@@ -5,8 +5,8 @@ import androidx.annotation.StringRes
 import androidx.navigation.NavGraphBuilder
 import dev.jjerrell.android.playground.base.android.navigation.BasePlaygroundNavigation
 import dev.jjerrell.android.playground.base.android.navigation.PlaygroundNavigationGroup
-import dev.jjerrell.android.playground.base.android.navigation.composable
-import dev.jjerrell.android.playground.base.android.navigation.navigation
+import dev.jjerrell.android.playground.base.android.navigation.compose.composable
+import dev.jjerrell.android.playground.base.android.navigation.compose.navigation
 import dev.jjerrell.android.playground.demo.logging.ui.compose.logging.basic.LoggingPage
 import dev.jjerrell.android.playground.demo.ui.DemoListPage
 import dev.jjerrell.android.playground.logging.android.R

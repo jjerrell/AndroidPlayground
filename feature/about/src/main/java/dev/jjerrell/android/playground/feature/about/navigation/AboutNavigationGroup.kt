@@ -7,8 +7,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.navigation.NavGraphBuilder
 import dev.jjerrell.android.playground.base.android.navigation.BasePlaygroundNavigation
 import dev.jjerrell.android.playground.base.android.navigation.PlaygroundNavigationGroup
-import dev.jjerrell.android.playground.base.android.navigation.composable
-import dev.jjerrell.android.playground.base.android.navigation.navigation
+import dev.jjerrell.android.playground.base.android.navigation.compose.composable
+import dev.jjerrell.android.playground.base.android.navigation.compose.navigation
 import dev.jjerrell.android.playground.feature.about.ui.compose.AboutPage
 import org.koin.androidx.compose.koinViewModel
 
