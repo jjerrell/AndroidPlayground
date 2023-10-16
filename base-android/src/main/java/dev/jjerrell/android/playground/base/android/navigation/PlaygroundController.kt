@@ -15,9 +15,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
  * @property hostController
  */
 class PlaygroundController(val hostController: NavHostController) {
-    /**
-     * @see NavHostController.currentBackStackEntryAsState
-     */
+    /** @see NavHostController.currentBackStackEntryAsState */
     @Composable
     fun currentBackStackEntryAsState(): State<NavBackStackEntry?> =
         hostController.currentBackStackEntryAsState()
@@ -29,14 +27,10 @@ class PlaygroundController(val hostController: NavHostController) {
      */
     fun findStartDestination() = hostController.graph.findStartDestination()
 
-    /**
-     * @see NavHostController.popBackStack
-     */
+    /** @see NavHostController.popBackStack */
     fun popBackStack() = hostController.popBackStack()
 
-    /**
-     * @see NavHostController.navigate
-     */
+    /** @see NavHostController.navigate */
     fun navigate(page: BasePlaygroundNavigation, builder: NavOptionsBuilder.() -> Unit = {}) =
         navigate(path = page.path, builder = builder)
 
