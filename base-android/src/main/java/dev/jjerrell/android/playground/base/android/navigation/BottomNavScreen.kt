@@ -33,6 +33,7 @@ sealed class BottomNavScreen(
     data object About :
         BottomNavScreen("about", R.string.navigation_about, icon = Icons.Filled.Person)
 
+    /** Static properties for [BottomNavScreen] convenience */
     companion object {
         /** All of the items in this collection as a list */
         val pages: List<BottomNavScreen> = listOf(Home, About)
