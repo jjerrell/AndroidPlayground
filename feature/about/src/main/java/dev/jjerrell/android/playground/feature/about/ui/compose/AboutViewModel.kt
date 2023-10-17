@@ -15,7 +15,8 @@ import dev.jjerrell.android.playground.feature.about.ContributorRepository
  */
 class AboutViewModel(private val repository: ContributorRepository) : ViewModel() {
     /**
-     * State value for Compose observations. Begins as uninitialized (all null properties) and changes to the parameter via `.copy` will trigger recomposition if any values change
+     * State value for Compose observations. Begins as uninitialized (all null properties) and
+     * changes to the parameter via `.copy` will trigger recomposition if any values change
      */
     var state by mutableStateOf(AboutState())
         private set
@@ -25,7 +26,8 @@ class AboutViewModel(private val repository: ContributorRepository) : ViewModel(
     }
 
     /**
-     * Attempts to retrieve a list of [Contributor]s from the [repository] and updates [state] with the result.
+     * Attempts to retrieve a list of [Contributor]s from the [repository] and updates [state] with
+     * the result.
      */
     private fun getContributors() {
         state =
@@ -42,9 +44,9 @@ class AboutViewModel(private val repository: ContributorRepository) : ViewModel(
 /**
  * [AboutViewModel] state object.
  *
+ * @constructor Create uninitialized About state
  * @property contributors the users who have contributed to the app. Default: null
  * @property errors any errors encountered during data retrieval. Default: null
- * @constructor Create uninitialized About state
  */
 data class AboutState(
     val contributors: List<Contributor>? = null,

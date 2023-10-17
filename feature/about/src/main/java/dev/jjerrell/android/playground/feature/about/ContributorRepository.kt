@@ -4,15 +4,13 @@ package dev.jjerrell.android.playground.feature.about
 /**
  * Definition for a contributor to this application
  *
+ * @constructor Create new Contributor
  * @property username the github username. Note: Do not prefix with @
  * @property iconUrl the url for the users profile picture
- * @constructor Create new Contributor
  */
 data class Contributor(val username: String, val iconUrl: String?)
 
-/**
- * Repository for working with application contributors
- */
+/** Repository for working with application contributors */
 interface ContributorRepository {
     /**
      * Get the list of contributors
@@ -21,7 +19,6 @@ interface ContributorRepository {
      */
     fun getContributors(): List<Contributor>
 }
-
 
 /**
  * Contributor repository implementation

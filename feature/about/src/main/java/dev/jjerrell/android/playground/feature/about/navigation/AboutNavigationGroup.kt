@@ -12,10 +12,7 @@ import dev.jjerrell.android.playground.base.android.navigation.compose.navigatio
 import dev.jjerrell.android.playground.feature.about.ui.compose.AboutPage
 import org.koin.androidx.compose.koinViewModel
 
-/**
- * Navigation hierarchy for feature-about
- *
- */
+/** Navigation hierarchy for feature-about */
 @OptIn(
     ExperimentalFoundationApi::class,
     ExperimentalLayoutApi::class,
@@ -37,9 +34,7 @@ data object AboutNavigationGroup : PlaygroundNavigationGroup {
 
     override val pages: List<BasePlaygroundNavigation> = listOf(Home)
 
-    /**
-     * The landing page for feature-about
-     */
+    /** The landing page for feature-about */
     data object Home : BasePlaygroundNavigation {
         override val path: String
             get() = "home"
