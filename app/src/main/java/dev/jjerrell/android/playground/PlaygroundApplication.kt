@@ -66,11 +66,12 @@ class PlaygroundApplication : Application() {
 /** A release-ready crash reporting [Timber.Tree] implementation */
 private class CrashReportingTree : Timber.Tree() {
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-        return super.log(priority, tag, message, t)
-        // TODO: Add configuration and finish implementation
         if (tag != null) {
             Timber.tag(tag = tag)
         }
+        // uses default logging implementation
+        return super.log(priority, tag, message, t)
+        // TODO: Add configuration and finish implementation
         when (priority) {
             Log.DEBUG -> {} // Timber.d(message, t)
             Log.INFO -> {} // Timber.i(message, t)
