@@ -8,25 +8,73 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import timber.log.Timber
 
+/**
+ * Logging page view model state object.
+ *
+ * @constructor Create empty Logging page view model state
+ * @property data the successful response to show in the top app bar, if any response is available
+ * @property exception any error caught in the most recent operation
+ */
 data class LoggingPageViewModelState(val data: String? = null, val exception: Throwable? = null) {
     val isInitialized = data != null || exception != null
     val isWarning = data != null && exception != null
     val isError = data == null && exception != null
 }
 
-class LoggingPageViewModel : ViewModel() {
+/**
+ * View model definition for the [LoggingPage]
+ *
+ * @constructor Create empty Logging page view model
+ */
+interface LoggingPageViewModel {
+    /**
+     * The logger implementation for this demonstration
+     */
+    val logger: Timber.Tree
 
+    /**
+     * Map of button name prefixes to log level integers. i.e. `"Verbose" to 4 // Log.Verbose == 4`
+     */
+    val buttonTypeLogLevelMap: Map<String, Int>
+
+    /**
+     * Observable state object for the view model implementation
+     */
+    val state: LoggingPageViewModelState
+
+    /** Simulates the general flow of updating the state, as if from a network connection */
+    fun getNetworkData()
+
+    /** Simulates making a request and receiving an exception. */
+    fun getNetworkDataWithoutSupport()
+
+    /**
+     * Shares behavior with [getNetworkDataWithoutSupport] but explicitly invokes the logger by
+     * issuing a [Log.WARN] message. This one also always sets a "successful" [state] result.
+     *
+     * Since the compose is observing the updated state, this method will result in an additional
+     * `Log.*` message.
+     */
+    fun getNetworkDataWithExplicitLogging()
+}
+
+/**
+ * Logging page view model implementation
+ *
+ * @constructor Create new Logging page view model
+ */
+internal class LoggingPageViewModelImpl : ViewModel(), LoggingPageViewModel {
     init {
         Timber.plant(LoggingPageTree())
     }
 
-    val logger: Timber.Tree by lazy {
+    override val logger: Timber.Tree by lazy {
         Timber.Forest.forest()
             .first { it.isLoggingDemoTree }
             .also { it.v("Demo logger now reporting.") }
     }
 
-    val buttonType: Map<String, Int> =
+    override val buttonTypeLogLevelMap: Map<String, Int> =
         mapOf(
             "Verbose" to Log.VERBOSE,
             "Debug" to Log.DEBUG,
@@ -36,7 +84,7 @@ class LoggingPageViewModel : ViewModel() {
             "Assert" to Log.ASSERT
         )
 
-    var state by mutableStateOf(LoggingPageViewModelState())
+    override var state by mutableStateOf(LoggingPageViewModelState())
         private set
 
     init {
@@ -50,13 +98,11 @@ class LoggingPageViewModel : ViewModel() {
         super.onCleared()
     }
 
-    /** Simulates the general flow of updating the state, as if from a network connection */
-    fun getNetworkData() {
+    override fun getNetworkData() {
         state = LoggingPageViewModelState(data = methodWhichGets())
     }
 
-    /** Simulates making a request and receiving an exception. */
-    fun getNetworkDataWithoutSupport() {
+    override fun getNetworkDataWithoutSupport() {
         state =
             try {
                 LoggingPageViewModelState(data = methodWhichThrows())
@@ -65,14 +111,7 @@ class LoggingPageViewModel : ViewModel() {
             }
     }
 
-    /**
-     * Shares behavior with [getNetworkDataWithoutSupport] but explicitly invokes the logger by
-     * issuing a [Log.WARN] message. This one also always sets a "successful" [state] result.
-     *
-     * Since the compose is observing the updated state, this method will result in an additional
-     * `Log.*` message.
-     */
-    fun getNetworkDataWithExplicitLogging() {
+    override fun getNetworkDataWithExplicitLogging() {
         state =
             try {
                 LoggingPageViewModelState(data = methodWhichThrows())
@@ -102,5 +141,8 @@ class LoggingPageViewModel : ViewModel() {
     }
 }
 
+/**
+ * Convenience variable for finding the [LoggingPageTree] within the current [Timber.Forest]
+ */
 private val Timber.Tree.isLoggingDemoTree: Boolean
     get() = this is LoggingPageTree

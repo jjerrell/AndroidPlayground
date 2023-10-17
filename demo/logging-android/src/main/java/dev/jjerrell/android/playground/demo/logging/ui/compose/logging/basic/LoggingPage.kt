@@ -25,14 +25,24 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import java.lang.UnsupportedOperationException
+import timber.log.Timber
 
 private const val PAGE_TAG = "LoggingPage"
 
+/**
+ * Creates a list buttons separated by the available log levels. Each button performs slightly
+ * different actions, showcasing the ability to hande many logging scenarios.
+ *
+ * @param modifier [Modifier] applied to this composables' top-level composable
+ * @param onBackAction
+ * @receiver
+ */
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun LoggingPage(modifier: Modifier = Modifier, onBackAction: () -> Unit) {
-    val viewModel: LoggingPageViewModel = viewModel()
+    val viewModel: LoggingPageViewModel = viewModel<LoggingPageViewModelImpl>()
     //    val BasicLoggingTag = remember { PlaygroundTag.BasicLogger.TestTag }
+
     // For instances like reporting screen views, use a LaunchedEffect with a constant as the key.
     LaunchedEffect(Unit) { viewModel.logger.v("Loading page") }
 
@@ -40,6 +50,7 @@ fun LoggingPage(modifier: Modifier = Modifier, onBackAction: () -> Unit) {
     // each recomposition event. Instead, this will only run once for every time viewModel.state
     // receives a new value
     LaunchedEffect(viewModel.state) {
+        Timber.tag(PAGE_TAG)
         if (viewModel.state.isError) {
             viewModel.logger.e(viewModel.state.exception, "Error while getting state")
         } else if (viewModel.state.isWarning) {
@@ -65,8 +76,8 @@ fun LoggingPage(modifier: Modifier = Modifier, onBackAction: () -> Unit) {
             }
         )
         LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(items = viewModel.buttonType.keys.toList()) { buttonName: String ->
-                val loggingLevel = viewModel.buttonType[buttonName] ?: Log.INFO
+            items(items = viewModel.buttonTypeLogLevelMap.keys.toList()) { buttonName: String ->
+                val loggingLevel = viewModel.buttonTypeLogLevelMap[buttonName] ?: Log.INFO
                 Column(
                     modifier =
                         Modifier.testTag(BasicLoggingTag.LogLevelHeader(buttonName))

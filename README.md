@@ -1,6 +1,6 @@
 # Android Playground
 
-A place to integrate and test various things.
+A place to integrate, test, and demonstrate various things. See the [project's code documentation](https://jjerrell.github.io/AndroidPlaygroundPages/). 
 
 ## Logging
 

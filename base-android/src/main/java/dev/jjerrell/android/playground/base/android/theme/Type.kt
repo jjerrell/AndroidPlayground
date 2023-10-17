@@ -7,17 +7,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-// Set of Material typography styles to start with
-val Typography =
+/** Set of Material typography styles for the application */
+internal val Typography =
     Typography(
-        bodyLarge =
-            TextStyle(
-                fontFamily = FontFamily.Default,
-                fontWeight = FontWeight.Normal,
-                fontSize = 16.sp,
-                lineHeight = 24.sp,
-                letterSpacing = 0.5.sp
-            )
+        bodyLarge = PlaygroundTypography.LargeBody
         /* Other default text styles to override
         titleLarge = TextStyle(
             fontFamily = FontFamily.Default,
@@ -35,3 +28,16 @@ val Typography =
         )
         */
     )
+
+/** Container for Playground typography styles */
+object PlaygroundTypography {
+    /** Definition for [Typography.bodyLarge] */
+    internal val LargeBody =
+        TextStyle(
+            fontFamily = FontFamily.Default,
+            fontWeight = FontWeight.Normal,
+            fontSize = 16.sp,
+            lineHeight = 24.sp,
+            letterSpacing = 0.5.sp
+        )
+}

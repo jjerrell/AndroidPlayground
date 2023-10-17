@@ -2,6 +2,7 @@
 package dev.jjerrell.android.playground
 
 import android.app.Application
+import android.util.Log
 import dev.jjerrell.android.playground.feature.about.aboutModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.KoinApplication
@@ -11,7 +12,24 @@ import org.koin.core.logger.Logger
 import org.koin.core.logger.MESSAGE
 import timber.log.Timber
 
+/**
+ * Playground application implementation.
+ *
+ * Configures:
+ * - Timber
+ *         - Debug
+ *         - Release
+ * - Koin
+ *     - Logging via Timber
+ *     - Android context
+ *     - Feature module DI
+ */
 class PlaygroundApplication : Application() {
+
+    /**
+     * - Plants the appropriate Timber tree depending on BuildConfig
+     * - Configure Koin and initialize modules
+     */
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
@@ -27,6 +45,7 @@ class PlaygroundApplication : Application() {
         }
     }
 
+    /** Configure Koin to use Timber for its logging use cases */
     private fun KoinApplication.setupLogging() {
         val koinLogger =
             object : Logger() {
@@ -44,9 +63,21 @@ class PlaygroundApplication : Application() {
     }
 }
 
+/** A release-ready crash reporting [Timber.Tree] implementation */
 private class CrashReportingTree : Timber.Tree() {
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-        // TODO: Release build fault reporting
-        return
+        if (tag != null) {
+            Timber.tag(tag = tag)
+        }
+        // uses default logging implementation
+        return super.log(priority, tag, message, t)
+        // TODO: Add configuration and finish implementation
+        when (priority) {
+            Log.DEBUG -> {} // Timber.d(message, t)
+            Log.INFO -> {} // Timber.i(message, t)
+            Log.WARN -> {} // Timber.w(message, t)
+            Log.ERROR -> {} // Timber.e(message, t)
+            Log.ASSERT -> {} // Timber.wtf(message, t)
+        }
     }
 }

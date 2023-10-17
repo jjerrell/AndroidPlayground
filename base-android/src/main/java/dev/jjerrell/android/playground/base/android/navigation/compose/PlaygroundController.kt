@@ -9,9 +9,12 @@ import androidx.navigation.compose.rememberNavController
 import dev.jjerrell.android.playground.base.android.navigation.PlaygroundController
 
 /**
+ * Creates a [PlaygroundController] containing a reference to [NavHostController] and providing a
+ * space for custom navigation and state control logic
+ *
  * @see NavHostController
  * @see rememberNavController
  */
 @Composable
 fun rememberPlaygroundController(vararg navigators: Navigator<out NavDestination>) =
-    PlaygroundController(rememberNavController(*navigators))
+    PlaygroundController(hostController = rememberNavController(*navigators))

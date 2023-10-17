@@ -9,15 +9,28 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.currentBackStackEntryAsState
 
+/**
+ * Playground controller
+ *
+ * @property hostController
+ */
 class PlaygroundController(val hostController: NavHostController) {
+    /** @see NavHostController.currentBackStackEntryAsState */
     @Composable
     fun currentBackStackEntryAsState(): State<NavBackStackEntry?> =
         hostController.currentBackStackEntryAsState()
 
+    /**
+     * Find start destination of the current graph
+     *
+     * @see androidx.navigation.NavGraph
+     */
     fun findStartDestination() = hostController.graph.findStartDestination()
 
+    /** @see NavHostController.popBackStack */
     fun popBackStack() = hostController.popBackStack()
 
+    /** @see NavHostController.navigate */
     fun navigate(page: BasePlaygroundNavigation, builder: NavOptionsBuilder.() -> Unit = {}) =
         navigate(path = page.path, builder = builder)
 
