@@ -19,6 +19,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+/**
+ * Main composable for feature-about with an injected view model slot
+ *
+ * @param viewModel the injected [AboutViewModel]
+ */
 @Composable
 @ExperimentalFoundationApi
 @ExperimentalLayoutApi

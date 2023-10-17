@@ -12,6 +12,10 @@ import dev.jjerrell.android.playground.base.android.navigation.compose.navigatio
 import dev.jjerrell.android.playground.feature.about.ui.compose.AboutPage
 import org.koin.androidx.compose.koinViewModel
 
+/**
+ * Navigation hierarchy for feature-about
+ *
+ */
 @OptIn(
     ExperimentalFoundationApi::class,
     ExperimentalLayoutApi::class,
@@ -23,11 +27,19 @@ fun NavGraphBuilder.aboutNavigation() {
     }
 }
 
+/**
+ * Strongly-typed feature-about navigation definition
+ *
+ * @constructor Create empty About navigation group
+ */
 data object AboutNavigationGroup : PlaygroundNavigationGroup {
     override val route: String = "about"
 
     override val pages: List<BasePlaygroundNavigation> = listOf(Home)
 
+    /**
+     * The landing page for feature-about
+     */
     data object Home : BasePlaygroundNavigation {
         override val path: String
             get() = "home"
