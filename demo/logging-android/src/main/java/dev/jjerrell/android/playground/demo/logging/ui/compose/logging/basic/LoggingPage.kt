@@ -133,7 +133,7 @@ fun LoggingPage(modifier: Modifier = Modifier, onBackAction: () -> Unit) {
             item {
                 Column(
                     modifier =
-                        Modifier.testTag(BasicLoggingTag.LogLevelHeader("CUSTOM"))
+                        Modifier.testTag(BasicLoggingTag.LogLevelHeader("CUSTOM_0"))
                             .padding(horizontal = 12.dp, vertical = 8.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -164,6 +164,24 @@ fun LoggingPage(modifier: Modifier = Modifier, onBackAction: () -> Unit) {
                     }
                 ) {
                     Text("Stdout logging")
+                }
+            }
+            item {
+                Column(
+                    modifier =
+                        Modifier.testTag(BasicLoggingTag.LogLevelHeader("CUSTOM_1"))
+                            .padding(horizontal = 12.dp, vertical = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text("Crash")
+                    Divider()
+                }
+                Button(
+                    modifier = Modifier.testTag(BasicLoggingTag.CustomLogLevelButton(3)),
+                    onClick = { throw RuntimeException("Test exception from demo-logging-android") }
+                ) {
+                    Text(text = "Force crash")
                 }
             }
         }

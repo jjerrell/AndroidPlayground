@@ -3,6 +3,9 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.android.kotlin) apply false
+    alias(libs.plugins.org.jetbrains.kotlin.jvm) apply false
+    id("com.google.gms.google-services") version "4.4.0" apply false
+    id("com.google.firebase.crashlytics") version "2.9.9" apply false
     alias(libs.plugins.diffplug.spotless)
     id("org.jetbrains.dokka") version "1.9.0"
 }
