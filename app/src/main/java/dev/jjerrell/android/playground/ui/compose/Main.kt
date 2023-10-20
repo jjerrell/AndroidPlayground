@@ -41,25 +41,22 @@ fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
     /** Pops the backstack */
     val onBackAction: () -> Unit = { navController.popBackStack() }
 
-    /** Attempts to navigate to a path on the current hierarchy */
+    /** Attempts to navigate to a path on the current hierarchy. Logs the event to analytics. */
     val onLocalNavigation: (path: BasePlaygroundNavigation) -> Unit = { path ->
+        navController.navigate(path)
         navController.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
             param(FirebaseAnalytics.Param.SCREEN_NAME, path.path)
             param(FirebaseAnalytics.Param.SCREEN_CLASS, path.javaClass.simpleName)
         }
-        navController.navigate(path)
     }
 
     /**
      * Action used when leaving the current navigation hierarchy.
      * - Pops up to the start destination and saves state
      * - Protects against relaunching the same destination
+     * - Logs the event to analytics
      */
     val onModularNavigation: (route: BasePlaygroundNavigation) -> Unit = { route ->
-        navController.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_NAME, route.path)
-            param(FirebaseAnalytics.Param.SCREEN_CLASS, route.javaClass.simpleName)
-        }
         navController.navigate(route) {
             // Pop up to the start destination of the graph to
             // avoid building up a large stack of destinations
@@ -70,6 +67,10 @@ fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
             launchSingleTop = true
             // Restore state when reselecting a previously selected item
             restoreState = true
+        }
+        navController.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, route.path)
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, route.javaClass.simpleName)
         }
     }
     // endregion
