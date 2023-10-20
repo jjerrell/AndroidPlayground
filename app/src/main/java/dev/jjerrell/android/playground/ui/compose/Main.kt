@@ -13,15 +13,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavDestination
 import androidx.navigation.compose.NavHost
+import com.google.firebase.analytics.FirebaseAnalytics
 import dev.jjerrell.android.playground.base.android.navigation.BasePlaygroundNavigation
 import dev.jjerrell.android.playground.base.android.navigation.BottomNavScreen
 import dev.jjerrell.android.playground.base.android.navigation.PlaygroundController
@@ -38,21 +35,18 @@ import kotlinx.coroutines.delay
  */
 @Composable
 fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
-    // region Navigation state
     /** Capture the back stack entry as a mutable state */
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-
-    /** Derive the current [NavDestination] */
-    val currentDestination: State<NavDestination?> = remember {
-        derivedStateOf { navBackStackEntry?.destination }
-    }
-    // endregion
     // region Navigation action hoisting
     /** Pops the backstack */
     val onBackAction: () -> Unit = { navController.popBackStack() }
 
     /** Attempts to navigate to a path on the current hierarchy */
     val onLocalNavigation: (path: BasePlaygroundNavigation) -> Unit = { path ->
+        navController.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, path.path)
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, path.javaClass.simpleName)
+        }
         navController.navigate(path)
     }
 
@@ -62,6 +56,10 @@ fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
      * - Protects against relaunching the same destination
      */
     val onModularNavigation: (route: BasePlaygroundNavigation) -> Unit = { route ->
+        navController.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, route.path)
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, route.javaClass.simpleName)
+        }
         navController.navigate(route) {
             // Pop up to the start destination of the graph to
             // avoid building up a large stack of destinations
@@ -83,7 +81,8 @@ fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
                     NavigationBarItem(
                         icon = { Icon(screen.icon, contentDescription = null) },
                         label = { Text(stringResource(screen.resourceName)) },
-                        selected = currentDestination.value?.route?.contains(screen.route) == true,
+                        selected =
+                            navBackStackEntry?.destination?.route?.contains(screen.route) == true,
                         onClick = { onModularNavigation(screen) }
                     )
                 }

@@ -45,6 +45,12 @@ dependencies {
     implementation(libs.bundles.androidx.compose)
     implementation(libs.androidx.navigation.compose)
 
+    //    implementation(enforcedPlatform(libs.koin.bom))
+    //    implementation(libs.koin.core)
+
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+
     implementation(libs.timber)
 
     testImplementation(libs.junit.test)
