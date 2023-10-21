@@ -21,12 +21,22 @@ class PlaygroundController(
     val hostController: NavHostController,
     private val analytics: FirebaseAnalytics
 ) {
-    fun logEvent(@Size(min = 1L, max = 40L) name: String, parameters: Map<String, String?> = mapOf()) {
-        val bundle = (if (parameters.isNotEmpty()) Bundle() else null)?.apply {
-            parameters.forEach {
-                putString(it.key, it.value)
+    /**
+     * Log event with the given name and map of properties.
+     *
+     * @param name the event name. See [FirebaseAnalytics.Event]
+     * @param parameters the parameter key/value pairs. See [FirebaseAnalytics.Param]
+     *
+     * @see FirebaseAnalytics.logEvent
+     */
+    fun logEvent(
+        @Size(min = 1L, max = 40L) name: String,
+        parameters: Map<String, String?> = mapOf()
+    ) {
+        val bundle =
+            (if (parameters.isNotEmpty()) Bundle() else null)?.apply {
+                parameters.forEach { putString(it.key, it.value) }
             }
-        }
         analytics.logEvent(name, bundle)
     }
 
@@ -52,4 +62,3 @@ class PlaygroundController(
     private fun navigate(path: String, builder: NavOptionsBuilder.() -> Unit) =
         hostController.navigate(route = path, builder = builder)
 }
-

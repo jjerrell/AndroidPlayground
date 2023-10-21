@@ -46,10 +46,11 @@ fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
         navController.navigate(path)
         navController.logEvent(
             name = FirebaseAnalytics.Event.SCREEN_VIEW,
-            parameters = mapOf(
-                FirebaseAnalytics.Param.SCREEN_NAME to path.javaClass.simpleName,
-                FirebaseAnalytics.Param.SCREEN_CLASS to path.path
-            )
+            parameters =
+                mapOf(
+                    FirebaseAnalytics.Param.SCREEN_NAME to path.javaClass.simpleName,
+                    FirebaseAnalytics.Param.SCREEN_CLASS to path.path
+                )
         )
     }
 
@@ -73,10 +74,11 @@ fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
         }
         navController.logEvent(
             name = FirebaseAnalytics.Event.SCREEN_VIEW,
-            parameters = mapOf(
-                FirebaseAnalytics.Param.SCREEN_NAME to route.javaClass.simpleName,
-                FirebaseAnalytics.Param.SCREEN_CLASS to route.path
-            )
+            parameters =
+                mapOf(
+                    FirebaseAnalytics.Param.SCREEN_NAME to route.javaClass.simpleName,
+                    FirebaseAnalytics.Param.SCREEN_CLASS to route.path
+                )
         )
     }
     // endregion
