@@ -26,7 +26,6 @@ class PlaygroundController(
      *
      * @param name the event name. See [FirebaseAnalytics.Event]
      * @param parameters the parameter key/value pairs. See [FirebaseAnalytics.Param]
-     *
      * @see FirebaseAnalytics.logEvent
      */
     fun logEvent(
