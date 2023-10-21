@@ -27,9 +27,7 @@ data class LoggingPageViewModelState(val data: String? = null, val exception: Th
  * @constructor Create empty Logging page view model
  */
 interface LoggingPageViewModel {
-    /**
-     * The logger implementation for this demonstration
-     */
+    /** The logger implementation for this demonstration */
     val logger: Timber.Tree
 
     /**
@@ -37,9 +35,7 @@ interface LoggingPageViewModel {
      */
     val buttonTypeLogLevelMap: Map<String, Int>
 
-    /**
-     * Observable state object for the view model implementation
-     */
+    /** Observable state object for the view model implementation */
     val state: LoggingPageViewModelState
 
     /** Simulates the general flow of updating the state, as if from a network connection */
@@ -141,8 +137,6 @@ internal class LoggingPageViewModelImpl : ViewModel(), LoggingPageViewModel {
     }
 }
 
-/**
- * Convenience variable for finding the [LoggingPageTree] within the current [Timber.Forest]
- */
+/** Convenience variable for finding the [LoggingPageTree] within the current [Timber.Forest] */
 private val Timber.Tree.isLoggingDemoTree: Boolean
     get() = this is LoggingPageTree
