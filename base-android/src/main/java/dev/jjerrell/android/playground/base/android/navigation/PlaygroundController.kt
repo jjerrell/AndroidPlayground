@@ -11,8 +11,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.ParametersBuilder
-import com.google.firebase.analytics.ktx.logEvent
 
 /**
  * Playground controller
@@ -23,12 +21,14 @@ class PlaygroundController(
     val hostController: NavHostController,
     private val analytics: FirebaseAnalytics
 ) {
-    fun logEvent(name: String, block: ParametersBuilder.() -> Unit) {
-        analytics.logEvent(name, block)
+    fun logEvent(@Size(min = 1L, max = 40L) name: String, parameters: Map<String, String?> = mapOf()) {
+        val bundle = (if (parameters.isNotEmpty()) Bundle() else null)?.apply {
+            parameters.forEach {
+                putString(it.key, it.value)
+            }
+        }
+        analytics.logEvent(name, bundle)
     }
-
-    fun logEvent(@Size(min = 1L, max = 40L) name: String, params: Bundle?) =
-        analytics.logEvent(name, params)
 
     /** @see NavHostController.currentBackStackEntryAsState */
     @Composable
@@ -52,3 +52,4 @@ class PlaygroundController(
     private fun navigate(path: String, builder: NavOptionsBuilder.() -> Unit) =
         hostController.navigate(route = path, builder = builder)
 }
+
