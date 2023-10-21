@@ -41,7 +41,8 @@ subprojects {
 }
 
 configure<com.diffplug.gradle.spotless.SpotlessExtension> {
-    ratchetFrom("origin/main")
+    // TODO: Detect CI environment and don't ratchet
+    //  ratchetFrom("origin/main")
     format("misc") {
         target("*.gradle", "*.md", ".gitignore")
 
