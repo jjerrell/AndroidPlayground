@@ -45,8 +45,8 @@ dependencies {
     implementation(libs.bundles.androidx.compose)
     implementation(libs.androidx.navigation.compose)
 
-    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
-    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation(enforcedPlatform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
 
     implementation(libs.timber)
 
