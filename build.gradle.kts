@@ -3,8 +3,10 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.android.kotlin) apply false
+    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
     alias(libs.plugins.diffplug.spotless)
-    id("org.jetbrains.dokka") version "1.9.0"
+    alias(libs.plugins.dokka)
 }
 
 subprojects {
@@ -39,6 +41,7 @@ subprojects {
 }
 
 configure<com.diffplug.gradle.spotless.SpotlessExtension> {
+    // TODO: Detect CI environment and don't ratchet
     ratchetFrom("origin/main")
     format("misc") {
         target("*.gradle", "*.md", ".gitignore")

@@ -10,6 +10,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsPropertyReceiver
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import dev.jjerrell.android.playground.base.android.navigation.PlaygroundController
 import dev.jjerrell.android.playground.base.android.navigation.compose.rememberPlaygroundController
 import dev.jjerrell.android.playground.base.android.theme.AndroidPlaygroundTheme
@@ -20,6 +23,8 @@ import org.koin.compose.KoinContext
 /** Playground activity serves as the main entry point for the application user interface. */
 @OptIn(ExperimentalComposeUiApi::class)
 class PlaygroundActivity : ComponentActivity() {
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
+
     /**
      * Configures:
      * - Compose context via [setContent]
@@ -32,9 +37,12 @@ class PlaygroundActivity : ComponentActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        firebaseAnalytics = Firebase.analytics
+
         setContent {
             KoinContext(application.getKoin()) {
-                val navHostController: PlaygroundController = rememberPlaygroundController()
+                val navHostController: PlaygroundController =
+                    rememberPlaygroundController(firebaseAnalytics)
                 AndroidPlaygroundTheme {
                     Main(
                         modifier =

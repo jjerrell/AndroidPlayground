@@ -45,6 +45,9 @@ dependencies {
     implementation(libs.bundles.androidx.compose)
     implementation(libs.androidx.navigation.compose)
 
+    implementation(enforcedPlatform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+
     implementation(libs.timber)
 
     testImplementation(libs.junit.test)

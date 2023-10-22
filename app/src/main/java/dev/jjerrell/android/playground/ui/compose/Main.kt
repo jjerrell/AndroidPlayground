@@ -13,15 +13,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavDestination
 import androidx.navigation.compose.NavHost
+import com.google.firebase.analytics.FirebaseAnalytics
 import dev.jjerrell.android.playground.base.android.navigation.BasePlaygroundNavigation
 import dev.jjerrell.android.playground.base.android.navigation.BottomNavScreen
 import dev.jjerrell.android.playground.base.android.navigation.PlaygroundController
@@ -38,28 +35,30 @@ import kotlinx.coroutines.delay
  */
 @Composable
 fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
-    // region Navigation state
     /** Capture the back stack entry as a mutable state */
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-
-    /** Derive the current [NavDestination] */
-    val currentDestination: State<NavDestination?> = remember {
-        derivedStateOf { navBackStackEntry?.destination }
-    }
-    // endregion
     // region Navigation action hoisting
     /** Pops the backstack */
     val onBackAction: () -> Unit = { navController.popBackStack() }
 
-    /** Attempts to navigate to a path on the current hierarchy */
+    /** Attempts to navigate to a path on the current hierarchy. Logs the event to analytics. */
     val onLocalNavigation: (path: BasePlaygroundNavigation) -> Unit = { path ->
         navController.navigate(path)
+        navController.logEvent(
+            name = FirebaseAnalytics.Event.SCREEN_VIEW,
+            parameters =
+                mapOf(
+                    FirebaseAnalytics.Param.SCREEN_NAME to path.javaClass.simpleName,
+                    FirebaseAnalytics.Param.SCREEN_CLASS to path.path
+                )
+        )
     }
 
     /**
      * Action used when leaving the current navigation hierarchy.
      * - Pops up to the start destination and saves state
      * - Protects against relaunching the same destination
+     * - Logs the event to analytics
      */
     val onModularNavigation: (route: BasePlaygroundNavigation) -> Unit = { route ->
         navController.navigate(route) {
@@ -73,6 +72,14 @@ fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
             // Restore state when reselecting a previously selected item
             restoreState = true
         }
+        navController.logEvent(
+            name = FirebaseAnalytics.Event.SCREEN_VIEW,
+            parameters =
+                mapOf(
+                    FirebaseAnalytics.Param.SCREEN_NAME to route.javaClass.simpleName,
+                    FirebaseAnalytics.Param.SCREEN_CLASS to route.path
+                )
+        )
     }
     // endregion
     Scaffold(
@@ -83,7 +90,8 @@ fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
                     NavigationBarItem(
                         icon = { Icon(screen.icon, contentDescription = null) },
                         label = { Text(stringResource(screen.resourceName)) },
-                        selected = currentDestination.value?.route?.contains(screen.route) == true,
+                        selected =
+                            navBackStackEntry?.destination?.route?.contains(screen.route) == true,
                         onClick = { onModularNavigation(screen) }
                     )
                 }
@@ -92,7 +100,7 @@ fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
     ) { innerPadding ->
         NavHost(
             navController = navController.hostController,
-            startDestination = "start",
+            startDestination = LandingStart.path,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(LandingStart) {
