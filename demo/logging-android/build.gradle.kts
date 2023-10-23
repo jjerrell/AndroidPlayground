@@ -6,10 +6,10 @@ plugins {
 
 android {
     namespace = "dev.jjerrell.android.playground.logging.android"
-    compileSdk = 34
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 29
+        minSdk = libs.versions.compileSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -18,18 +18,14 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
         }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions { jvmTarget = "17" }
-    composeOptions { kotlinCompilerExtensionVersion = "1.5.3" }
+    kotlinOptions { jvmTarget = libs.versions.jvmTarget.get() }
+    composeOptions { kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get() }
     buildFeatures { compose = true }
 }
 
