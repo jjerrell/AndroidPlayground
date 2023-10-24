@@ -16,6 +16,5 @@ import dev.jjerrell.android.playground.base.android.navigation.PlaygroundControl
  * @see rememberNavController
  */
 @Composable
-fun rememberPlaygroundController(
-    vararg navigators: Navigator<out NavDestination>
-) = PlaygroundController(hostController = rememberNavController(*navigators))
+fun rememberPlaygroundController(vararg navigators: Navigator<out NavDestination>) =
+    PlaygroundController(hostController = rememberNavController(*navigators))

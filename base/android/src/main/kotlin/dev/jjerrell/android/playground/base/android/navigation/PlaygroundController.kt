@@ -1,8 +1,6 @@
 /* (C) 2023 Jacob Jerrell */
 package dev.jjerrell.android.playground.base.android.navigation
 
-import android.os.Bundle
-import androidx.annotation.Size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.navigation.NavBackStackEntry
@@ -16,9 +14,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
  *
  * @property hostController
  */
-class PlaygroundController(
-    val hostController: NavHostController
-) {
+class PlaygroundController(val hostController: NavHostController) {
     /** @see NavHostController.currentBackStackEntryAsState */
     @Composable
     fun currentBackStackEntryAsState(): State<NavBackStackEntry?> =
@@ -42,9 +38,7 @@ class PlaygroundController(
         hostController.navigate(route = path, builder = builder)
 }
 
-/**
- * @return the caller of the method which called this method.
- */
+/** @return the caller of the method which called this method. */
 private fun getRecentSteps(): String {
     var recentSteps = ""
     val traceElements = Thread.currentThread().stackTrace
