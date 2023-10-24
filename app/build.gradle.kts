@@ -65,8 +65,8 @@ dependencies {
     implementation(enforcedPlatform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
+    implementation(project(":app-host"))
 
-    implementation(project(":base-android"))
     implementation(project(":demo"))
 
     implementation(project(":feature-about"))

@@ -9,20 +9,14 @@ android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = libs.versions.compileSdk.get().toInt()
+        minSdk = libs.versions.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
-        debug {}
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
         }
     }
     compileOptions {
@@ -41,12 +35,8 @@ dependencies {
     implementation(kotlinBOM)
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.bundles.androidx.ui)
     implementation(libs.bundles.androidx.compose)
     implementation(libs.androidx.navigation.compose)
-
-    implementation(enforcedPlatform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
 
     implementation(libs.timber)
 

@@ -41,8 +41,7 @@ class PlaygroundActivity : ComponentActivity() {
 
         setContent {
             KoinContext(application.getKoin()) {
-                val navHostController: PlaygroundController =
-                    rememberPlaygroundController(firebaseAnalytics)
+                val navHostController: PlaygroundController = rememberPlaygroundController()
                 AndroidPlaygroundTheme {
                     Main(
                         modifier =

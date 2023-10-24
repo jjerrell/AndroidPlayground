@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "dev.jjerrell.android.playground.logging.android"
+    namespace = "dev.jjerrell.android.playground.demo"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = libs.versions.compileSdk.get().toInt()
+        minSdk = libs.versions.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.bundles.androidx.compose)
 
     implementation(project(":base-android"))
+
     implementation(project(":demo-logging-android"))
 
     testImplementation(libs.junit.test)

@@ -6,7 +6,6 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.Navigator
 import androidx.navigation.compose.rememberNavController
-import com.google.firebase.analytics.FirebaseAnalytics
 import dev.jjerrell.android.playground.base.android.navigation.PlaygroundController
 
 /**
@@ -18,6 +17,5 @@ import dev.jjerrell.android.playground.base.android.navigation.PlaygroundControl
  */
 @Composable
 fun rememberPlaygroundController(
-    analytics: FirebaseAnalytics,
     vararg navigators: Navigator<out NavDestination>
-) = PlaygroundController(hostController = rememberNavController(*navigators), analytics = analytics)
+) = PlaygroundController(hostController = rememberNavController(*navigators))

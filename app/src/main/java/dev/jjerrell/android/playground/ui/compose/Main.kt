@@ -44,14 +44,6 @@ fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
     /** Attempts to navigate to a path on the current hierarchy. Logs the event to analytics. */
     val onLocalNavigation: (path: BasePlaygroundNavigation) -> Unit = { path ->
         navController.navigate(path)
-        navController.logEvent(
-            name = FirebaseAnalytics.Event.SCREEN_VIEW,
-            parameters =
-                mapOf(
-                    FirebaseAnalytics.Param.SCREEN_NAME to path.javaClass.simpleName,
-                    FirebaseAnalytics.Param.SCREEN_CLASS to path.path
-                )
-        )
     }
 
     /**
@@ -72,14 +64,6 @@ fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
             // Restore state when reselecting a previously selected item
             restoreState = true
         }
-        navController.logEvent(
-            name = FirebaseAnalytics.Event.SCREEN_VIEW,
-            parameters =
-                mapOf(
-                    FirebaseAnalytics.Param.SCREEN_NAME to route.javaClass.simpleName,
-                    FirebaseAnalytics.Param.SCREEN_CLASS to route.path
-                )
-        )
     }
     // endregion
     Scaffold(

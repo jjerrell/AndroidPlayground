@@ -10,7 +10,6 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.google.firebase.analytics.FirebaseAnalytics
 
 /**
  * Playground controller
@@ -18,27 +17,8 @@ import com.google.firebase.analytics.FirebaseAnalytics
  * @property hostController
  */
 class PlaygroundController(
-    val hostController: NavHostController,
-    private val analytics: FirebaseAnalytics
+    val hostController: NavHostController
 ) {
-    /**
-     * Log event with the given name and map of properties.
-     *
-     * @param name the event name. See [FirebaseAnalytics.Event]
-     * @param parameters the parameter key/value pairs. See [FirebaseAnalytics.Param]
-     * @see FirebaseAnalytics.logEvent
-     */
-    fun logEvent(
-        @Size(min = 1L, max = 40L) name: String,
-        parameters: Map<String, String?> = mapOf()
-    ) {
-        val bundle =
-            (if (parameters.isNotEmpty()) Bundle() else null)?.apply {
-                parameters.forEach { putString(it.key, it.value) }
-            }
-        analytics.logEvent(name, bundle)
-    }
-
     /** @see NavHostController.currentBackStackEntryAsState */
     @Composable
     fun currentBackStackEntryAsState(): State<NavBackStackEntry?> =
@@ -60,4 +40,20 @@ class PlaygroundController(
 
     private fun navigate(path: String, builder: NavOptionsBuilder.() -> Unit) =
         hostController.navigate(route = path, builder = builder)
+}
+
+/**
+ * @return the caller of the method which called this method.
+ */
+private fun getRecentSteps(): String {
+    var recentSteps = ""
+    val traceElements = Thread.currentThread().stackTrace
+    val maxStepCount = 3
+    val skipCount = 2
+    for (i in Math.min(maxStepCount + skipCount, traceElements.size) - 1 downTo skipCount) {
+        val className =
+            traceElements[i].className.substring(traceElements[i].className.lastIndexOf(".") + 1)
+        recentSteps += " >> " + className + "." + traceElements[i].methodName + "()"
+    }
+    return recentSteps
 }

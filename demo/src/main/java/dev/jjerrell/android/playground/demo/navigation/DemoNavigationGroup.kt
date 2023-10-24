@@ -7,9 +7,9 @@ import dev.jjerrell.android.playground.base.android.navigation.BasePlaygroundNav
 import dev.jjerrell.android.playground.base.android.navigation.PlaygroundNavigationGroup
 import dev.jjerrell.android.playground.base.android.navigation.compose.composable
 import dev.jjerrell.android.playground.base.android.navigation.compose.navigation
+import dev.jjerrell.android.playground.demo.R
 import dev.jjerrell.android.playground.demo.logging.ui.compose.logging.basic.LoggingPage
 import dev.jjerrell.android.playground.demo.ui.DemoListPage
-import dev.jjerrell.android.playground.logging.android.R
 
 /**
  * Demo navigation graph builder

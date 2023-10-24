@@ -9,7 +9,7 @@ android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = libs.versions.compileSdk.get().toInt()
+        minSdk = libs.versions.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -40,7 +40,6 @@ dependencies {
     implementation(libs.bundles.androidx.compose)
 
     implementation(libs.timber)
-
     implementation(project(":base-android"))
 
     testImplementation(libs.junit.test)
