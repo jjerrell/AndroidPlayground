@@ -59,4 +59,5 @@ dependencies {
 
     debugImplementation(libs.junit.compose.ui.test.tooling)
     debugImplementation(libs.junit.compose.ui.test.manifest)
+    implementation(kotlin("reflect"))
 }

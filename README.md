@@ -2,7 +2,7 @@
 
 A place to integrate, test, and demonstrate various things. See the [project's code documentation](https://jjerrell.github.io/AndroidPlaygroundPages/).
 
-## Application - Features & Capabilities
+## Application - Capabilities
 
 ### Firebase
 
@@ -42,4 +42,12 @@ Timber is currently implemented for:
 
 Demonstrates various ways to log messages using the standard library in a Jetpack Compose MVVM architecture.
 
-For best results, use filter: `package:dev.jjerrell.android.logging tag:LoggingPage tag:MAIN_ACTIVITY` to get rid of the background noise.
+## Application - Features
+
+## About - `feture-about`
+
+Simple feature to describe the application and celebrate third-party contributions.
+
+## Disclaimers
+
+The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the Creative Commons 3.0 Attribution License.
