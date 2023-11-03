@@ -5,10 +5,10 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.navigation.NavGraphBuilder
-import dev.jjerrell.android.playground.base.android.navigation.BasePlaygroundNavigation
-import dev.jjerrell.android.playground.base.android.navigation.PlaygroundNavigationGroup
-import dev.jjerrell.android.playground.base.android.navigation.compose.composable
-import dev.jjerrell.android.playground.base.android.navigation.compose.navigation
+import dev.jjerrell.android.playground.base.android.nav.BasePlaygroundNavigation
+import dev.jjerrell.android.playground.base.android.nav.PlaygroundNavigationGroup
+import dev.jjerrell.android.playground.base.android.nav.compose.composable
+import dev.jjerrell.android.playground.base.android.nav.compose.navigation
 import dev.jjerrell.android.playground.feature.about.ui.compose.AboutPage
 import org.koin.androidx.compose.koinViewModel
 

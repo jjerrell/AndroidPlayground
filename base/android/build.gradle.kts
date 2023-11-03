@@ -5,26 +5,16 @@ plugins {
 }
 
 android {
-    namespace = "dev.jjerrell.android.playground.feature.about"
+    namespace = "dev.jjerrell.android.playground.base.android"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
 
-    buildTypes {
-        debug {}
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
+    buildTypes { release { isMinifyEnabled = false } }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -36,19 +26,15 @@ android {
 
 dependencies {
     val composeBOM = enforcedPlatform(libs.androidx.compose.bom)
+    val kotlinBOM = enforcedPlatform(libs.jetbrains.kotlin.bom)
     implementation(composeBOM)
-    implementation(enforcedPlatform(libs.jetbrains.kotlin.bom))
-    implementation(enforcedPlatform(libs.koin.bom))
+    implementation(kotlinBOM)
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.bundles.androidx.ui)
     implementation(libs.bundles.androidx.compose)
+    implementation(libs.androidx.navigation.compose)
 
-    implementation(libs.koin.core)
-    implementation(libs.koin.compose)
-    implementation(libs.koin.androidx.compose)
-    implementation(libs.koin.androidx.compose.navigation)
-    implementation(project(":base-android"))
+    implementation(libs.timber)
 
     testImplementation(libs.junit.test)
 
@@ -59,5 +45,4 @@ dependencies {
 
     debugImplementation(libs.junit.compose.ui.test.tooling)
     debugImplementation(libs.junit.compose.ui.test.manifest)
-    implementation(kotlin("reflect"))
 }

@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "dev.jjerrell.android.playground.logging.android"
-    compileSdk = 34
+    namespace = "dev.jjerrell.android.playground.demo"
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 29
+        minSdk = libs.versions.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -28,8 +28,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions { jvmTarget = "17" }
-    composeOptions { kotlinCompilerExtensionVersion = "1.5.3" }
+    kotlinOptions { jvmTarget = libs.versions.jvmTarget.get() }
+    composeOptions { kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get() }
     buildFeatures { compose = true }
 }
 
@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.bundles.androidx.compose)
 
     implementation(project(":base-android"))
+
     implementation(project(":demo-logging-android"))
 
     testImplementation(libs.junit.test)

@@ -13,9 +13,11 @@ import androidx.compose.ui.semantics.testTagsAsResourceId
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
-import dev.jjerrell.android.playground.base.android.navigation.PlaygroundController
-import dev.jjerrell.android.playground.base.android.navigation.compose.rememberPlaygroundController
+import dev.jjerrell.android.playground.base.android.nav.PlaygroundController
+import dev.jjerrell.android.playground.base.android.nav.compose.rememberPlaygroundController
 import dev.jjerrell.android.playground.base.android.theme.AndroidPlaygroundTheme
+import dev.jjerrell.android.playground.host.AppHost
+import dev.jjerrell.android.playground.ui.compose.LandingStart
 import dev.jjerrell.android.playground.ui.compose.Main
 import org.koin.android.ext.android.getKoin
 import org.koin.compose.KoinContext
@@ -41,23 +43,27 @@ class PlaygroundActivity : ComponentActivity() {
 
         setContent {
             KoinContext(application.getKoin()) {
-                val navHostController: PlaygroundController =
-                    rememberPlaygroundController(firebaseAnalytics)
+                val navHostController: PlaygroundController = rememberPlaygroundController()
                 AndroidPlaygroundTheme {
-                    Main(
-                        modifier =
-                            Modifier.semantics {
-                                    // This only needs to be set once in any hierarchy of
-                                    // composables.
-                                    // The descendants will automatically follow this behavior. This
-                                    // will simplify automation testing, if explored.
-                                    testTagsAsResourceId = true
-                                }
-                                // The tag identifying this compose component for instrumented or
-                                // automated testing.
-                                .testTag("TOP_LEVEL_COMPOSABLE"),
-                        navController = navHostController
+                    AppHost(
+                        controller = navHostController,
+                        startRoute = with (LandingStart) { navHostRoute ?: route }
                     )
+//                    Main(
+//                        modifier =
+//                        Modifier
+//                            .semantics {
+//                                // This only needs to be set once in any hierarchy of
+//                                // composables.
+//                                // The descendants will automatically follow this behavior. This
+//                                // will simplify automation testing, if explored.
+//                                testTagsAsResourceId = true
+//                            }
+//                            // The tag identifying this compose component for instrumented or
+//                            // automated testing.
+//                            .testTag("TOP_LEVEL_COMPOSABLE"),
+//                        navController = navHostController
+//                    )
                 }
             }
         }

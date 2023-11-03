@@ -18,11 +18,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
-import com.google.firebase.analytics.FirebaseAnalytics
-import dev.jjerrell.android.playground.base.android.navigation.BasePlaygroundNavigation
-import dev.jjerrell.android.playground.base.android.navigation.BottomNavScreen
-import dev.jjerrell.android.playground.base.android.navigation.PlaygroundController
-import dev.jjerrell.android.playground.base.android.navigation.compose.composable
+import dev.jjerrell.android.playground.base.android.nav.BasePlaygroundNavigation
+import dev.jjerrell.android.playground.base.android.nav.BottomNavScreen
+import dev.jjerrell.android.playground.base.android.nav.PlaygroundController
+import dev.jjerrell.android.playground.base.android.nav.PlaygroundNavGroup
+import dev.jjerrell.android.playground.base.android.nav.compose.composable
 import dev.jjerrell.android.playground.demo.navigation.demoNavigation
 import dev.jjerrell.android.playground.feature.about.navigation.aboutNavigation
 import kotlinx.coroutines.delay
@@ -44,14 +44,6 @@ fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
     /** Attempts to navigate to a path on the current hierarchy. Logs the event to analytics. */
     val onLocalNavigation: (path: BasePlaygroundNavigation) -> Unit = { path ->
         navController.navigate(path)
-        navController.logEvent(
-            name = FirebaseAnalytics.Event.SCREEN_VIEW,
-            parameters =
-                mapOf(
-                    FirebaseAnalytics.Param.SCREEN_NAME to path.javaClass.simpleName,
-                    FirebaseAnalytics.Param.SCREEN_CLASS to path.path
-                )
-        )
     }
 
     /**
@@ -72,14 +64,6 @@ fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
             // Restore state when reselecting a previously selected item
             restoreState = true
         }
-        navController.logEvent(
-            name = FirebaseAnalytics.Event.SCREEN_VIEW,
-            parameters =
-                mapOf(
-                    FirebaseAnalytics.Param.SCREEN_NAME to route.javaClass.simpleName,
-                    FirebaseAnalytics.Param.SCREEN_CLASS to route.path
-                )
-        )
     }
     // endregion
     Scaffold(
@@ -100,7 +84,7 @@ fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
     ) { innerPadding ->
         NavHost(
             navController = navController.hostController,
-            startDestination = LandingStart.path,
+            startDestination = LandingStart.route,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(LandingStart) {
@@ -123,10 +107,7 @@ fun Main(modifier: Modifier = Modifier, navController: PlaygroundController) {
 }
 
 /** The initial [BasePlaygroundNavigation] page for the application; A welcome screen. */
-private object LandingStart : BasePlaygroundNavigation {
-    override val path: String
+data object LandingStart : PlaygroundNavGroup(navHostRoute = "landing") {
+    override val relativePath: String
         get() = "start"
-
-    override val deepLinks: List<String>?
-        get() = null
 }
