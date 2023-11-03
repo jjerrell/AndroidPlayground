@@ -26,3 +26,6 @@ project(":demo-logging-android").projectDir = file("demo/logging-android")
 
 include(":feature-about")
 project(":feature-about").projectDir = file("feature/about")
+
+include(":feature-welcome")
+project(":feature-welcome").projectDir = file("feature/welcome")

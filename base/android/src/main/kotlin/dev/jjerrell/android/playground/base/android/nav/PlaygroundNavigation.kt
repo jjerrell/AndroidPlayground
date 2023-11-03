@@ -1,5 +1,13 @@
 /* (C) 2023 Jacob Jerrell */
-package dev.jjerrell.android.playground.base.android.navigation
+package dev.jjerrell.android.playground.base.android.nav
+
+abstract class PlaygroundNavGroup(val navHostRoute: String? = null) {
+    protected abstract val relativePath: String
+    open val deepLinks: List<String>? = null
+
+    val route: String
+        get() = navHostRoute.let { if (it.isNullOrBlank()) "" else "$it/" } + relativePath
+}
 
 /** The base interface for all playground app navigation definitions */
 interface BasePlaygroundNavigation {
@@ -11,7 +19,7 @@ interface BasePlaygroundNavigation {
 }
 
 /** Mimics a modular navigation hierarchy */
-interface PlaygroundNavigationGroup {
+interface PlaygroundNavigationGroup : BasePlaygroundNavigation {
     /** Root path for the module */
     val route: String
 
@@ -21,4 +29,10 @@ interface PlaygroundNavigationGroup {
     /** Start route for the NavGraph */
     val startRoute: BasePlaygroundNavigation
         get() = pages.first()
+
+    override val path: String
+        get() = startRoute.path
+
+    override val deepLinks: List<String>?
+        get() = pages.map { it.path }.takeUnless { it.isEmpty() }
 }

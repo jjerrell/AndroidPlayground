@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "dev.jjerrell.android.playground.host"
+    namespace = "dev.jjerrell.android.playground.feature.welcome"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
+        minSdk = libs.versions.compileSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -27,25 +27,15 @@ android {
 dependencies {
     val composeBOM = enforcedPlatform(libs.androidx.compose.bom)
     val kotlinBOM = enforcedPlatform(libs.jetbrains.kotlin.bom)
-    val koinBOM = enforcedPlatform(libs.koin.bom)
     implementation(composeBOM)
     implementation(kotlinBOM)
-    implementation(koinBOM)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.bundles.androidx.compose)
-    implementation(libs.androidx.navigation.compose)
-
-    implementation(libs.koin.compose)
-    implementation(libs.koin.androidx.compose)
-    implementation(libs.koin.androidx.compose.navigation)
 
     implementation(libs.timber)
 
-    api(project(":base-android"))
-    implementation(project(":feature-about"))
-    implementation(project(":feature-welcome"))
-
+    implementation(project(":base-android"))
 
     testImplementation(libs.junit.test)
 

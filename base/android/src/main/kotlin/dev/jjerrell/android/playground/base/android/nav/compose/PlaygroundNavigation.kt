@@ -1,5 +1,5 @@
 /* (C) 2023 Jacob Jerrell */
-package dev.jjerrell.android.playground.base.android.navigation.compose
+package dev.jjerrell.android.playground.base.android.nav.compose
 
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.AnimatedContentTransitionScope
@@ -11,8 +11,9 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import dev.jjerrell.android.playground.base.android.navigation.BasePlaygroundNavigation
-import dev.jjerrell.android.playground.base.android.navigation.PlaygroundNavigationGroup
+import dev.jjerrell.android.playground.base.android.nav.BasePlaygroundNavigation
+import dev.jjerrell.android.playground.base.android.nav.PlaygroundNavGroup
+import dev.jjerrell.android.playground.base.android.nav.PlaygroundNavigationGroup
 
 /**
  * Wrapper for building NavGraphs using [PlaygroundNavigationGroup].
@@ -22,11 +23,12 @@ import dev.jjerrell.android.playground.base.android.navigation.PlaygroundNavigat
  * @see androidx.navigation.compose.navigation
  */
 inline fun NavGraphBuilder.navigation(
-    group: PlaygroundNavigationGroup,
+    group: PlaygroundNavGroup,
+    startDestination: PlaygroundNavGroup = group,
     builder: NavGraphBuilder.() -> Unit
 ): Unit =
     destination(
-        NavGraphBuilder(provider, startDestination = group.startRoute.path, route = group.route)
+        NavGraphBuilder(provider, startDestination = startDestination.route, route = group.navHostRoute)
             .apply(builder)
     )
 
@@ -36,7 +38,7 @@ inline fun NavGraphBuilder.navigation(
  * @see composable
  */
 fun NavGraphBuilder.composable(
-    navRoute: BasePlaygroundNavigation,
+    navRoute: PlaygroundNavGroup,
     arguments: List<NamedNavArgument> = emptyList(),
     deepLinks: List<NavDeepLink> = emptyList(),
     enterTransition:
@@ -58,7 +60,7 @@ fun NavGraphBuilder.composable(
     content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit
 ) =
     composable(
-        navRoute.path,
+        navRoute.route,
         arguments,
         deepLinks,
         enterTransition,

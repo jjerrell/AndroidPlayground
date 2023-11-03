@@ -1,5 +1,5 @@
 /* (C) 2023 Jacob Jerrell */
-package dev.jjerrell.android.playground.base.android.navigation
+package dev.jjerrell.android.playground.base.android.nav
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -31,8 +31,8 @@ class PlaygroundController(val hostController: NavHostController) {
     fun popBackStack() = hostController.popBackStack()
 
     /** @see NavHostController.navigate */
-    fun navigate(page: BasePlaygroundNavigation, builder: NavOptionsBuilder.() -> Unit = {}) =
-        navigate(path = page.path, builder = builder)
+    fun navigate(page: PlaygroundNavGroup, builder: NavOptionsBuilder.() -> Unit = {}) =
+        navigate(path = page.route, builder = builder)
 
     private fun navigate(path: String, builder: NavOptionsBuilder.() -> Unit) =
         hostController.navigate(route = path, builder = builder)

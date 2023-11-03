@@ -1,12 +1,12 @@
 /* (C) 2023 Jacob Jerrell */
-package dev.jjerrell.android.playground.base.android.navigation.compose
+package dev.jjerrell.android.playground.base.android.nav.compose
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.Navigator
 import androidx.navigation.compose.rememberNavController
-import dev.jjerrell.android.playground.base.android.navigation.PlaygroundController
+import dev.jjerrell.android.playground.base.android.nav.PlaygroundController
 
 /**
  * Creates a [PlaygroundController] containing a reference to [NavHostController] and providing a

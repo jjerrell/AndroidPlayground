@@ -1,5 +1,5 @@
 /* (C) 2023 Jacob Jerrell */
-package dev.jjerrell.android.playground.base.android.navigation
+package dev.jjerrell.android.playground.base.android.nav
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
