@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.jjerrell.android.playground.base.android.navigation.BasePlaygroundNavigation
+import dev.jjerrell.android.playground.base.nav.PlaygroundPage
 import dev.jjerrell.android.playground.demo.navigation.DemoNavigationGroup
 
 /**
@@ -22,9 +22,10 @@ import dev.jjerrell.android.playground.demo.navigation.DemoNavigationGroup
  * @receiver
  */
 @Composable
-fun DemoListPage(modifier: Modifier = Modifier, onRequestDemo: (BasePlaygroundNavigation) -> Unit) {
+@OptIn(ExperimentalStdlibApi::class)
+fun DemoListPage(modifier: Modifier = Modifier, onRequestDemo: (PlaygroundPage) -> Unit) {
     LazyVerticalGrid(modifier = modifier.padding(8.dp), columns = GridCells.Adaptive(156.dp)) {
-        items(DemoNavigationGroup.pages.filterNot { it is DemoNavigationGroup.Home }) {
+        items(DemoNavigationGroup.Page.entries.filterNot { it == DemoNavigationGroup.Page.HOME }) {
             Button(onClick = { onRequestDemo(it) }) { Text("Logging") }
         }
     }

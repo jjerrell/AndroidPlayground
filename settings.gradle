@@ -14,9 +14,15 @@ dependencyResolutionManagement {
 }
 rootProject.name = "AndroidPlayground"
 include ":app"
-include ":base-android"
+
+include(":base-android")
+project(":base-android").projectDir = file("base/android")
+
+include(":base-nav")
+project(":base-nav").projectDir = file("base/nav")
 
 include ":demo"
+
 include(":demo-logging-android")
 project(":demo-logging-android").projectDir = file("demo/logging-android")
 

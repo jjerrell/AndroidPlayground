@@ -1,15 +1,13 @@
 /* (C) 2023 Jacob Jerrell */
 package dev.jjerrell.android.playground.demo.navigation
 
-import androidx.annotation.StringRes
 import androidx.navigation.NavGraphBuilder
-import dev.jjerrell.android.playground.base.android.navigation.BasePlaygroundNavigation
-import dev.jjerrell.android.playground.base.android.navigation.PlaygroundNavigationGroup
-import dev.jjerrell.android.playground.base.android.navigation.compose.composable
-import dev.jjerrell.android.playground.base.android.navigation.compose.navigation
+import dev.jjerrell.android.playground.base.nav.PlaygroundGroup
+import dev.jjerrell.android.playground.base.nav.PlaygroundPage
+import dev.jjerrell.android.playground.base.nav.composable
+import dev.jjerrell.android.playground.base.nav.navigation
 import dev.jjerrell.android.playground.demo.logging.ui.compose.logging.basic.LoggingPage
 import dev.jjerrell.android.playground.demo.ui.DemoListPage
-import dev.jjerrell.android.playground.logging.android.R
 
 /**
  * Demo navigation graph builder
@@ -19,48 +17,30 @@ import dev.jjerrell.android.playground.logging.android.R
  */
 fun NavGraphBuilder.demoNavigation(
     onBackAction: () -> Unit,
-    onNavigationAction: (route: BasePlaygroundNavigation) -> Unit
+    onNavigationAction: (route: PlaygroundPage) -> Unit
 ) {
     navigation(DemoNavigationGroup) {
-        composable(navRoute = DemoNavigationGroup.Home) {
+        composable(navRoute = DemoNavigationGroup.Page.HOME) {
             DemoListPage(onRequestDemo = { demoNavItem -> onNavigationAction(demoNavItem) })
         }
-        composable(navRoute = DemoNavigationGroup.Logging) {
+        composable(navRoute = DemoNavigationGroup.Page.LOGGING) {
             LoggingPage(onBackAction = onBackAction)
         }
     }
 }
 
-/**
- * Local wrapper for [BasePlaygroundNavigation], adding additional properties
- *
- * @constructor Create empty Demo navigation item
- */
-internal interface DemoNavigationItem : BasePlaygroundNavigation {
-    /** The string resource for this pages button and title */
-    @get:StringRes val pageTitleRes: Int
-}
+data object DemoNavigationGroup : PlaygroundGroup("demo") {
+    override val startRoute: PlaygroundPage
+        get() = Page.HOME
 
-data object DemoNavigationGroup : PlaygroundNavigationGroup {
-    override val route: String = "demo"
-    override val startRoute: BasePlaygroundNavigation
-        get() = Home
-
-    override val pages: List<BasePlaygroundNavigation> = listOf(Logging)
-
-    /** The Demo landing page definition */
-    data object Home : BasePlaygroundNavigation {
-        override val path: String = "home"
-        override val deepLinks: List<String>?
-            get() = null
-    }
-
-    /** The Logging demo page */
-    data object Logging : DemoNavigationItem {
-        @StringRes override val pageTitleRes: Int = R.string.demo_logging_title
-        override val path: String = "logging"
-
-        override val deepLinks: List<String>?
-            get() = null
+    enum class Page : PlaygroundPage {
+        HOME {
+            override val titleRes: Int? = null
+            override val path: String = "home"
+        },
+        LOGGING {
+            override val titleRes: Int? = null
+            override val path: String = "logging"
+        }
     }
 }

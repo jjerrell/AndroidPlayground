@@ -48,6 +48,7 @@ android {
 }
 
 dependencies {
+    implementation(project(mapOf("path" to ":base-nav")))
     val composeBOM = enforcedPlatform(libs.androidx.compose.bom)
 
     implementation(libs.androidx.core.ktx)

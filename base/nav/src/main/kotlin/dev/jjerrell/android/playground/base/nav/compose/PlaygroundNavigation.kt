@@ -1,5 +1,5 @@
 /* (C) 2023 Jacob Jerrell */
-package dev.jjerrell.android.playground.base.android.navigation.compose
+package dev.jjerrell.android.playground.base.nav.compose
 
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.AnimatedContentTransitionScope
@@ -11,32 +11,32 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import dev.jjerrell.android.playground.base.android.navigation.BasePlaygroundNavigation
-import dev.jjerrell.android.playground.base.android.navigation.PlaygroundNavigationGroup
+import dev.jjerrell.android.playground.base.nav.PlaygroundGroup
+import dev.jjerrell.android.playground.base.nav.PlaygroundPage
 
 /**
- * Wrapper for building NavGraphs using [PlaygroundNavigationGroup].
+ * Wrapper for building NavGraphs using [PlaygroundGroup].
  *
  * @param group the playground navigation group containing routes for this hierarchy
  * @param builder
  * @see androidx.navigation.compose.navigation
  */
 inline fun NavGraphBuilder.navigation(
-    group: PlaygroundNavigationGroup,
+    group: PlaygroundGroup,
     builder: NavGraphBuilder.() -> Unit
 ): Unit =
     destination(
-        NavGraphBuilder(provider, startDestination = group.startRoute.path, route = group.route)
+        NavGraphBuilder(provider, startDestination = group.startRoute.path, route = group.hostRoute)
             .apply(builder)
     )
 
 /**
- * Wrapper for defining a navigation route using [BasePlaygroundNavigation].
+ * Wrapper for defining a navigation route using [PlaygroundPage].
  *
  * @see composable
  */
 fun NavGraphBuilder.composable(
-    navRoute: BasePlaygroundNavigation,
+    navRoute: PlaygroundPage,
     arguments: List<NamedNavArgument> = emptyList(),
     deepLinks: List<NavDeepLink> = emptyList(),
     enterTransition:
