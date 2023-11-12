@@ -50,7 +50,9 @@ fun Main(
         block = {
             logEvent(
                 "navigation",
-                "Id: ${navBackStackEntry?.id}; Name: ${navBackStackEntry?.destination?.route}",
+                "Id: ${navBackStackEntry?.id}; Name: ${navBackStackEntry?.destination?.route}\n" +
+                    "Start destination: ${navController.findStartDestination().route}\n" +
+                    "Hierarchy: ${navBackStackEntry?.destination?.hierarchy?.joinToString { it.route ?: "null" }}",
                 null
             )
         }
@@ -116,19 +118,28 @@ fun Main(
     Scaffold(
         modifier = modifier,
         bottomBar = {
-            BottomAppBar {
-                BottomNavGroup.Page.entries.forEach { screen ->
-                    val screenIsSelected =
-                        navBackStackEntry?.destination?.hierarchy?.any {
-                            it.route.equals(screen.path, true)
-                        } == true
-                    NavigationBarItem(
-                        selected = screenIsSelected,
-                        icon = { Icon(screen.icon, contentDescription = null) },
-                        enabled = !screenIsSelected,
-                        label = { screen.titleRes?.let { Text(stringResource(it)) } },
-                        onClick = { onLocalNavigation(screen) }
-                    )
+            if (
+                navBackStackEntry
+                    ?.destination
+                    ?.hierarchy
+                    ?.first()
+                    ?.route
+                    ?.equals(BottomNavGroup.startRoute::class.simpleName, true) == true
+            ) {
+                BottomAppBar {
+                    BottomNavGroup.Page.entries.forEach { screen ->
+                        val screenIsSelected =
+                            navBackStackEntry?.destination?.hierarchy?.any {
+                                it.route.equals(screen.path, true)
+                            } == true
+                        NavigationBarItem(
+                            selected = screenIsSelected,
+                            icon = { Icon(screen.icon, contentDescription = null) },
+                            enabled = !screenIsSelected,
+                            label = { screen.titleRes?.let { Text(stringResource(it)) } },
+                            onClick = { onLocalNavigation(screen) }
+                        )
+                    }
                 }
             }
         }

@@ -30,12 +30,14 @@ class PlaygroundApplication : Application() {
      */
     override fun onCreate() {
         super.onCreate()
+        // Timber configuration
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         } else {
             Timber.plant(CrashReportingTree())
         }
 
+        // Koin configuration
         startKoin {
             setupLogging()
             androidContext(this@PlaygroundApplication)
@@ -49,11 +51,11 @@ class PlaygroundApplication : Application() {
             object : Logger() {
                 override fun display(level: Level, msg: MESSAGE) {
                     when (level) {
-                        Level.DEBUG -> Timber.d(msg)
-                        Level.INFO -> Timber.i(msg)
-                        Level.WARNING -> Timber.w(msg)
-                        Level.ERROR -> Timber.e(msg)
-                        Level.NONE -> Timber.wtf(msg)
+                        Level.DEBUG -> Timber.tag("koin").d(msg)
+                        Level.INFO -> Timber.tag("koin").i(msg)
+                        Level.WARNING -> Timber.tag("koin").w(msg)
+                        Level.ERROR -> Timber.tag("koin").e(msg)
+                        Level.NONE -> Timber.tag("koin").wtf(msg)
                     }
                 }
             }
