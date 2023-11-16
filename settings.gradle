@@ -25,6 +25,7 @@ include ":demo"
 
 include(":demo-logging-android")
 project(":demo-logging-android").projectDir = file("demo/logging-android")
+include(":app-host")
 
 include(":feature-about")
 project(":feature-about").projectDir = file("feature/about")

@@ -7,8 +7,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.navigation.NavGraphBuilder
 import dev.jjerrell.android.playground.base.nav.PlaygroundGroup
 import dev.jjerrell.android.playground.base.nav.PlaygroundPage
-import dev.jjerrell.android.playground.base.nav.composable
-import dev.jjerrell.android.playground.base.nav.navigation
+import dev.jjerrell.android.playground.base.nav.compose.composable
+import dev.jjerrell.android.playground.base.nav.compose.navigation
 import dev.jjerrell.android.playground.feature.about.ui.compose.AboutPage
 import org.koin.androidx.compose.koinViewModel
 
@@ -20,7 +20,9 @@ import org.koin.androidx.compose.koinViewModel
 )
 fun NavGraphBuilder.aboutNavigation() {
     navigation(AboutNavigationGroup) {
-        composable(AboutNavigationGroup.Home) { AboutPage(viewModel = koinViewModel()) }
+        composable(AboutNavigationGroup.Home) {
+            AboutPage(viewModel = koinViewModel())
+        }
     }
 }
 
@@ -29,9 +31,12 @@ fun NavGraphBuilder.aboutNavigation() {
  *
  * @constructor Create empty About navigation group
  */
-data object AboutNavigationGroup : PlaygroundGroup("about") {
+data object AboutNavigationGroup : PlaygroundGroup {
     override val startRoute: PlaygroundPage
         get() = Home
+
+    override val hostRoute: String
+        get() = "about"
 
     /** The landing page for feature-about */
     data object Home : PlaygroundPage {

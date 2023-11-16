@@ -13,6 +13,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/app-host" />
             <option value="$PROJECT_DIR$/base/android" />
             <option value="$PROJECT_DIR$/base/nav" />
             <option value="$PROJECT_DIR$/demo" />

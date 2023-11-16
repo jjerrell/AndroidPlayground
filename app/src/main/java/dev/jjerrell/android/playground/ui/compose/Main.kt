@@ -144,6 +144,7 @@ fun Main(
             }
         }
     ) { innerPadding ->
+
         NavHost(
             navController = navController.hostController,
             startDestination = "start",

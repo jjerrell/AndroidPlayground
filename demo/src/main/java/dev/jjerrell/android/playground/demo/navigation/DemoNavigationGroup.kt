@@ -4,8 +4,8 @@ package dev.jjerrell.android.playground.demo.navigation
 import androidx.navigation.NavGraphBuilder
 import dev.jjerrell.android.playground.base.nav.PlaygroundGroup
 import dev.jjerrell.android.playground.base.nav.PlaygroundPage
-import dev.jjerrell.android.playground.base.nav.composable
-import dev.jjerrell.android.playground.base.nav.navigation
+import dev.jjerrell.android.playground.base.nav.compose.composable
+import dev.jjerrell.android.playground.base.nav.compose.navigation
 import dev.jjerrell.android.playground.demo.logging.ui.compose.logging.basic.LoggingPage
 import dev.jjerrell.android.playground.demo.ui.DemoListPage
 
@@ -29,9 +29,12 @@ fun NavGraphBuilder.demoNavigation(
     }
 }
 
-data object DemoNavigationGroup : PlaygroundGroup("demo") {
+data object DemoNavigationGroup : PlaygroundGroup {
     override val startRoute: PlaygroundPage
         get() = Page.HOME
+
+    override val hostRoute: String
+        get() = "demo"
 
     enum class Page : PlaygroundPage {
         HOME {

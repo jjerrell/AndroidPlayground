@@ -17,8 +17,11 @@ import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 
-abstract class PlaygroundGroup(val hostRoute: String? = null) {
-    abstract val startRoute: PlaygroundPage
+interface PlaygroundGroup {
+    val hostRoute: String?
+        get() = null
+
+    val startRoute: PlaygroundPage
 }
 
 interface PlaygroundPage {
@@ -40,64 +43,10 @@ interface PlaygroundPage {
     }
 }
 
-// region NavGraph
-/**
- * Wrapper for building NavGraphs using [PlaygroundGroup].
- *
- * @param group the playground navigation group containing routes for this hierarchy
- * @param builder
- * @see androidx.navigation.compose.navigation
- */
-inline fun NavGraphBuilder.navigation(
-    group: PlaygroundGroup,
-    builder: NavGraphBuilder.() -> Unit
-): Unit =
-    destination(
-        NavGraphBuilder(provider, startDestination = group.startRoute.path, route = group.hostRoute)
-            .apply(builder)
-    )
-
-/**
- * Wrapper for defining a navigation route using [PlaygroundPage].
- *
- * @see composable
- */
-fun NavGraphBuilder.composable(
-    navRoute: PlaygroundPage,
-    arguments: List<NamedNavArgument> = emptyList(),
-    deepLinks: List<NavDeepLink> = emptyList(),
-    enterTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? =
-        null,
-    exitTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? =
-        null,
-    popEnterTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)? =
-        enterTransition,
-    popExitTransition:
-        (@JvmSuppressWildcards
-        AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)? =
-        exitTransition,
-    content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit
-) =
-    composable(
-        navRoute.path,
-        arguments,
-        deepLinks,
-        enterTransition,
-        exitTransition,
-        popEnterTransition,
-        popExitTransition,
-        content
-    )
-// endregion
-
 // region Bottom Nav Screen
-data object BottomNavGroup : PlaygroundGroup() {
+data object BottomNavGroup : PlaygroundGroup {
+    override val hostRoute: String
+        get() = "main"
     override val startRoute: PlaygroundPage
         get() = Page.Home
 

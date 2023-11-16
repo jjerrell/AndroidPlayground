@@ -63,10 +63,9 @@ class PlaygroundApplication : Application() {
     }
 }
 
-/** A release-ready crash reporting [Timber.Tree] implementation */
+/** No logs. Crashes are already sent to Crashlytics */
 private class CrashReportingTree : Timber.Tree() {
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-        // Uses default logging implementation. Crashes are sent to Firebase Crashlytics.
-        return super.log(priority, tag, message, t)
+
     }
 }
